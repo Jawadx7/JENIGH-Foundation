@@ -9,14 +9,11 @@ const LoginForm = () => {
     e.preventDefault();
   };
   return (
-    <form className="authForm" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="mb-5">
-        <label className="authLabel" htmlFor="email">
-          Email Address
-        </label>
+        <label htmlFor="email">Email Address</label>
         <br />
         <input
-          className="authInput"
           type="text"
           name="email"
           value={username}
@@ -24,22 +21,17 @@ const LoginForm = () => {
         />
       </div>
       <div className="mb-5">
-        <label className="authLabel" htmlFor="password">
-          Password
-        </label>
+        <label htmlFor="password">Password</label>
         <br />
         <input
-          className="authInput"
           type="text"
           name="password"
-          value={username}
-          onChange={(e) => setUserName(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
 
-      <button className="authFormBtn" type="submit">
-        Log In
-      </button>
+      <button type="submit">Log In</button>
     </form>
   );
 };

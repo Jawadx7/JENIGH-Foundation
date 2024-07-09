@@ -1,5 +1,6 @@
 import "../../asserts/css/donations.scss";
 import "../../App.css";
+import { Link } from "react-router-dom";
 
 const DonationCard = ({ donation }) => {
   return (
@@ -66,9 +67,9 @@ const DonationCard = ({ donation }) => {
             </p>
           </div>
 
-          <button className="btn btn-secondary">
+          <Link to={`/donations/${donation.id}`} className="btn btn-secondary">
             <span>Donate</span>
-          </button>
+          </Link>
         </div>
       </div>
     </li>

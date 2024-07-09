@@ -1,29 +1,37 @@
-.authForm {
-  .authLabel {
-    font-weight: 300;
-    font-size: 1.5rem;
-  }
+form {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
 
-  .authInput {
-    border: 2px solid gray;
-    width: 100%;
-    font-size: 1.3rem;
+  label {
+    color: white;
     font-weight: 200;
-    padding: 10px 1rem;
-    outline: 0;
+    font-size: 2rem;
   }
 
-  .authFormBtn {
+  input {
+    width: 35rem;
+    background: white;
+    // box-shadow: 0 0 5px #908f8f;
+    outline: 0;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 1.5rem;
+    height: 5rem;
+  }
+
+  button {
     width: 100%;
     text-align: center;
-    font-size: 1.3rem;
     padding: 1rem;
-    background: rgb(6, 167, 167);
-    color: white;
-    transition: 0.3s ease;
+    background: white;
+    border-radius: 10px;
+    margin-top: 2rem;
+    transition: 0.5s ease;
 
     &:hover {
       background: teal;
+      color: white;
     }
   }
 }
