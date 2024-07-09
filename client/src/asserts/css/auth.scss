@@ -1,0 +1,29 @@
+.authForm {
+  .authLabel {
+    font-weight: 300;
+    font-size: 1.5rem;
+  }
+
+  .authInput {
+    border: 2px solid gray;
+    width: 100%;
+    font-size: 1.3rem;
+    font-weight: 200;
+    padding: 10px 1rem;
+    outline: 0;
+  }
+
+  .authFormBtn {
+    width: 100%;
+    text-align: center;
+    font-size: 1.3rem;
+    padding: 1rem;
+    background: rgb(6, 167, 167);
+    color: white;
+    transition: 0.3s ease;
+
+    &:hover {
+      background: teal;
+    }
+  }
+}
