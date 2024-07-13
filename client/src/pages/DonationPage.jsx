@@ -1,4 +1,6 @@
 import { Link, useParams } from "react-router-dom";
+import Navbar from "../components/common/Navbar";
+import "../asserts/css/donations.scss";
 import { donations_json } from "../asserts/mocks/donations_json";
 
 const DonationPage = () => {
@@ -8,6 +10,8 @@ const DonationPage = () => {
   );
   return (
     <div>
+      <Navbar />
+
       <div
         style={{
           width: "100%",
@@ -18,7 +22,10 @@ const DonationPage = () => {
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
         }}
-      ></div>
+        className="donation_banner flex align-center px-[5%]"
+      >
+        {/* <h1>Donate</h1> */}
+      </div>
 
       <div className="flex align-center space-x-3 m-[3rem]">
         <p>~~</p>
@@ -28,7 +35,7 @@ const DonationPage = () => {
       </div>
 
       <div className="p-[2rem]">
-        <h1 style={{ fontSize: "3rem", fontWeight: "800" }}>
+        <h1 id="donation" style={{ fontSize: "3rem", fontWeight: "800" }}>
           {donationsItem.title}
         </h1>
         <p>

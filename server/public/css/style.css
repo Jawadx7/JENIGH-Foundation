@@ -370,7 +370,6 @@ body {
 
 .hero {
   background-color: var(--eerie-black-1);
-  /* background: url('../assets/images/hero.jpg'); */
   color: var(--white);
   min-height: 700px;
   padding-block: 120px 60px;

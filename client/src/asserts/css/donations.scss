@@ -41,7 +41,6 @@
 
 .progress {
   height: 6px;
-  width: 83%;
   background-color: var(--pistachio);
   border-radius: inherit;
 }
@@ -85,4 +84,14 @@
 
 .card-wrapper-text .cyan {
   color: var(--medium-turquoise);
+}
+
+// Donation Page
+
+.donation_banner {
+  h1 {
+    font-size: 5rem;
+    font-weight: 800;
+    color: white;
+  }
 }

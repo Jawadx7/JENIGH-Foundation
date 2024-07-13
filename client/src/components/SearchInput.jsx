@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 
-const SearchInput = () => {
-  const [search, setSearch] = useState("");
-  const handleSearch = (e) => {
-    e.preventDefault();
-  };
+const SearchInput = ({ handleSearch, search, setSearch }) => {
   return (
-    <div></div>
-    // <form onSubmit={handleSearch}>
-    //   <input
-    //     type="text"
-    //     placeholder="search donations ..."
-    //     value={search}
-    //     onChange={(e) => setSearch(e.target.value)}
-    //     // style={{ width: "70%", margin: "2rem auto", fontSize: "1.5rem" }}
-    //   />
-    // </form>
+    <input
+      type="text"
+      placeholder="search donations ..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      className="bg-gray-100 w-[90%] sm:w-[80%] mx-auto my-[2rem] px-[2rem] py-[1.5rem] outline-none"
+    />
   );
 };
 

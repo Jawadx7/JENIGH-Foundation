@@ -1,0 +1,19 @@
+.AdminPageContainer {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 20rem auto;
+
+  .sidebar {
+    height: 100vh;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+    padding: 2rem;
+  }
+
+  main {
+    height: 100vh;
+    overflow: scroll;
+    padding: 2rem;
+  }
+}

@@ -1,8 +1,8 @@
-import "../../asserts/css/donations.scss";
-import "../../App.css";
+import "../../../asserts/css/donations.scss";
+import "../../../App.css";
 import { Link } from "react-router-dom";
 
-const DonationCard = ({ donation }) => {
+const AdminDonationCard = ({ donation }) => {
   let donation_percentage = 0;
   if (donation.target_amount > donation.amount_raised) {
     let difference = donation.target_amount - donation.amount_raised;
@@ -15,7 +15,7 @@ const DonationCard = ({ donation }) => {
   return (
     <li>
       <div className="donate-card">
-        <figure className="card-banner">
+        {/* <figure className="card-banner">
           <img
             src={donation.img}
             width="520"
@@ -24,7 +24,7 @@ const DonationCard = ({ donation }) => {
             alt="Elephant"
             className="img-cover"
           />
-        </figure>
+        </figure> */}
 
         <div className="card-content">
           <div className="progress-wrapper">
@@ -85,10 +85,15 @@ const DonationCard = ({ donation }) => {
           >
             <span>Learn More</span>
           </Link>
+
+          <div className="mt-[2rem] grid align-center grid-cols-1 md:grid-cols-2 gap-5">
+            <button className="btn">UPDATE</button>
+            <button className="btn btn-secondary">DELETE</button>
+          </div>
         </div>
       </div>
     </li>
   );
 };
 
-export default DonationCard;
+export default AdminDonationCard;

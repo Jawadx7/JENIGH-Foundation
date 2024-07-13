@@ -219,6 +219,8 @@
   .btn:is(:hover, :focus)::after { transform: translate(0, 0); }
   
   .btn-secondary { --btn-bg: var(--black); }
+  /* .btn-update { background: teal;}
+  .btn-delete { background: red; } */
   
   .btn-secondary:is(:hover, :focus) { --btn-bg: var(--pistachio); }
   
