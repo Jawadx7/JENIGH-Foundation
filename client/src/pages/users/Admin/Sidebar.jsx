@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import "../.././../asserts/css/admin.scss";
 
 const Sidebar = ({ active, setActive }) => {
   return (
-    <>
+    <div id="sidebarComponent">
       <div>
         <div>Admin Dashboard</div>
       </div>
@@ -39,7 +40,7 @@ const Sidebar = ({ active, setActive }) => {
           Add Donations
         </Link>
       </ul>
-    </>
+    </div>
   );
 };
 

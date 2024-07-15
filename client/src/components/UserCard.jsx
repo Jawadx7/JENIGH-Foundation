@@ -2,7 +2,7 @@ import React from "react";
 
 const UserCard = ({ user }) => {
   return (
-    <div className="shadow-md p-[2rem]">
+    <div className="shadow-md p-[1.5rem] md:p-[2rem]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <figure>
           <img

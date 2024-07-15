@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../../asserts/images/logo.png";
+import profile from "../../asserts/images/person.jpg";
 
 const Navbar = () => {
   return (
@@ -15,9 +16,13 @@ const Navbar = () => {
         </Link>
       </ul>
 
-      <div className="profile">
-        <img src="" alt="profileImg" />
-      </div>
+      <Link to={"/users/clientuser"} className="profile">
+        <img
+          src={profile}
+          alt="profileImg"
+          className="w-[5rem] h-[5rem] rounded-full"
+        />
+      </Link>
     </header>
   );
 };

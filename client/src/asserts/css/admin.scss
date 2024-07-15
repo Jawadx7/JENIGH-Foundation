@@ -5,9 +5,6 @@
 
   .sidebar {
     height: 100vh;
-    // position: fixed;
-    // top: 0;
-    // left: 0;
     padding: 2rem;
   }
 
@@ -15,5 +12,71 @@
     height: 100vh;
     overflow: scroll;
     padding: 2rem;
+
+    .DonationsList {
+      display: grid;
+      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  @media (width <= 1000px) {
+    grid-template-columns: 1fr;
+
+    .sidebar {
+      z-index: 10;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: fit-content;
+
+      #sidebarComponent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        ul {
+          width: 50%;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          align-items: center;
+          gap: 1rem;
+
+          li {
+            border-left: none;
+          }
+        }
+      }
+    }
+
+    main {
+      // padding-top: 18rem;
+      padding: 18rem 10px 1rem 10px;
+      .DonationsList {
+        grid-template-columns: 1fr 1fr;
+        overflow-y: auto;
+      }
+    }
+  }
+
+  @media (width <= 700px) {
+    main {
+      padding-top: 20rem;
+      .DonationsList {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sidebar {
+      flex-direction: column;
+      #sidebarComponent {
+        flex-direction: column;
+        ul {
+          width: 100%;
+        }
+      }
+    }
   }
 }

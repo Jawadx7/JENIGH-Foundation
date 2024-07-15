@@ -1,0 +1,56 @@
+:root {
+  --dark: #212121;
+}
+
+.clientPage {
+  display: flex;
+  align-items: start;
+
+  .sidebar {
+    padding: 2rem;
+    flex: 1;
+    background: var(--dark);
+    height: 100vh;
+  }
+
+  main {
+    flex: 3;
+    padding: 2rem;
+    height: 100vh;
+    overflow-y: scroll;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+
+      span {
+        font-size: 3rem;
+      }
+    }
+  }
+}
+
+.modal {
+  transition: 0.3s ease;
+  &.closed {
+    top: -100%;
+  }
+  &.opened {
+    top: 50%;
+  }
+
+  .closebtn {
+    font-size: 5rem;
+    font-weight: 800;
+    color: white;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+
+    &:hover {
+      color: red;
+    }
+  }
+}

@@ -1,32 +1,66 @@
-import RegisterForm from "../components/auth/RegisterForm";
 import { Link } from "react-router-dom";
-import signupImg from "../asserts/images/sign_up-white.png";
+import "../asserts/css/auth.css";
+import signupImg from "../asserts/images/register.png";
 
 const Register = () => {
   return (
-    <main className="bg-teal-400 w-full h-[100vh] flex align-center justify-center p-[2rem]">
-      <div className="bg-teal-500 shadow-lg rounded-3xl w-[70%] md:h-[80vh] grid grid-cols-1 md:grid-cols-2">
-        <div className="p-[2rem] hidden align-center justify-center relative md:flex">
-          <img
-            src={signupImg}
-            alt=""
-            className="absolute w-[100%] h-[100%] rounded-b-3xl md:rounded-tr-3xl md:rounded-br-3xl"
-          />
+    <div className="page_body">
+      <section id="main-page">
+        <div id="left-container">
+          <div className="top-section">
+            {/* <div className="div-img"></div> */}
+            <img src={signupImg} alt="" />
+          </div>
+          {/* <div className="botton-section">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad,
+              explicabo. Loremmm ipsum dolor sit amet consectetur adipisicing
+              elit. Quod eligendi non
+            </p>
+          </div> */}
         </div>
+        <div id="right-container">
+          <div className="welcome-back">
+            <p>Get Started</p>
+          </div>
+          <div className="login-page">
+            <p class="login-header">Create a new account</p>
+            <form className="inner-div">
+              <input
+                className="input-area"
+                type="text"
+                placeholder="User Name"
+                required
+              />
+              <input
+                className="input-area"
+                type="email"
+                placeholder="Email"
+                required
+              />
+              <input
+                className="input-area"
+                type="password"
+                placeholder="Password"
+                required
+              />
+              <input
+                className="input-area"
+                type="password"
+                placeholder="Confirm Password"
+                required
+              />
+              <input className="submit-button" type="submit" value="Sign Up" />
 
-        <div className="p-[1rem] md:p-[2rem] flex align-center justify-center">
-          <div>
-            <RegisterForm />
-            <div className="flex align-center space-x-3 mt-5">
-              <p className="text-black">Already have an account ?</p>
-              <Link className="text-white" to="/login">
-                Log In
-              </Link>
-            </div>
+              <div className="flex align-center flex-col">
+                <Link to="/login">LogIn</Link>
+                <Link to="">Forgot Password</Link>
+              </div>
+            </form>
           </div>
         </div>
-      </div>
-    </main>
+      </section>
+    </div>
   );
 };
 
