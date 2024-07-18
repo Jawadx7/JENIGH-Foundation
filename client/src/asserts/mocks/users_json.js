@@ -1,4 +1,4 @@
-import img from "../images/person.jpg";
+import img from "../images/person_1.jpg";
 
 export const users_json = [
   {

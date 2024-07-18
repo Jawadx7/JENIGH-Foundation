@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../../asserts/images/logo.png";
-import profile from "../../asserts/images/person.jpg";
+import "../../asserts/css/navbar.scss";
 
 const Navbar = () => {
   return (
@@ -8,20 +8,16 @@ const Navbar = () => {
       <img src={logo} alt="logo" className="w-[6rem]" />
 
       <ul className="flex align-center space-x-5">
-        <Link to="/" className="text-black hover:text-gray-500">
+        <Link to="/" className="link text-black hover:text-gray-500">
           Home
         </Link>
-        <Link to="/donations" className="text-black hover:text-gray-500">
+        <Link to="/donations" className="link text-black hover:text-gray-500">
           Donations
         </Link>
       </ul>
 
-      <Link to={"/users/clientuser"} className="profile">
-        <img
-          src={profile}
-          alt="profileImg"
-          className="w-[5rem] h-[5rem] rounded-full"
-        />
+      <Link to={"/login"} className="btn btn_primary">
+        sign in
       </Link>
     </header>
   );

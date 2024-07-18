@@ -1,6 +1,6 @@
 import "../../../asserts/css/client.scss";
 import ClientDonationsList from "./clientDonationsList";
-import profile from "../../../asserts/images/person.jpg";
+import profile from "../../../asserts/images/person_3.jpg";
 import "../../../App.css";
 import { useState } from "react";
 import UpdateInfoCard from "./UpdateInfoCard";

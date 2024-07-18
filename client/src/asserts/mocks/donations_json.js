@@ -1,7 +1,4 @@
-import cause1 from "../images/cause-1.jpg";
-import cause2 from "../images/cause-2.jpg";
-import cause3 from "../images/cause-3.jpg";
-import cause4 from "../images/cause-4.jpg";
+import cause from "../images/cause.jpg";
 
 export const donations_json = [
   {
@@ -9,7 +6,7 @@ export const donations_json = [
     amount_raised: 1000,
     title: "Raise Money To Help Kaimong Flood Victoms",
     target_amount: 7000,
-    img: cause1,
+    img: cause,
     opened: "April 23rd, 2024",
     closing: "June 20th, 2024",
   },
@@ -18,7 +15,7 @@ export const donations_json = [
     amount_raised: 900,
     title: "Contribute Funds To Build School for kids in Kaimong",
     target_amount: 2800,
-    img: cause2,
+    img: cause,
     opened: "June 23rd, 2024",
     closing: "April 20th, 2025",
   },
@@ -27,7 +24,7 @@ export const donations_json = [
     amount_raised: 7500,
     title: "Raise Funds To Help Build Hostipital in Kaimong",
     target_amount: 9000,
-    img: cause3,
+    img: cause,
     opened: "April 23rd, 2024",
     closing: "",
   },
@@ -36,7 +33,7 @@ export const donations_json = [
     amount_raised: 1000,
     title: "Raise Money To Help Kaimong Flood Victoms",
     target_amount: 7000,
-    img: cause4,
+    img: cause,
     opened: "January 23rd, 2024",
     closing: "March 20th, 2024",
   },
@@ -45,7 +42,7 @@ export const donations_json = [
     amount_raised: 900,
     title: "Contribute Funds To Build School for kids in Kaimong",
     target_amount: 2800,
-    img: cause2,
+    img: cause,
     opened: "October 23rd, 2024",
     closing: "",
   },
@@ -54,7 +51,7 @@ export const donations_json = [
     amount_raised: 9000,
     title: "Raise Funds To Help Build Hostipital in Kaimong",
     target_amount: 9000,
-    img: cause3,
+    img: cause,
     opened: "May 23rd, 2024",
     closing: "",
   },

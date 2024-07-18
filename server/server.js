@@ -1,16 +1,9 @@
 const express = require("express");
-const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// set the view engine to EJS
-app.set("view engine", "ejs");
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, "public")));
-
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/api", (req, res) => {
+  res.send([{ name: "Jawad", email: "jawad@email.com" }]);
 });
 
 app.listen(PORT, () => {

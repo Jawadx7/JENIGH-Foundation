@@ -1,0 +1,260 @@
+:root {
+  --mydark: #212121;
+  --my-secondary: #91be51;
+}
+
+.hero {
+  width: 100%;
+  flex-direction: column;
+  height: 130vh;
+  background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.09),
+      rgba(0, 0, 0, 0.09)
+    ),
+    url("../images/hero.jpg");
+  padding: 20rem 5% 2rem 5%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  h1 {
+    width: 70%;
+    margin: 0 auto;
+    font-size: 8rem;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+    cursor: default;
+  }
+
+  .values {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 0 5%;
+
+    .value_box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 25rem;
+      background-color: transparent;
+      border-radius: 10px;
+      border: 3px solid transparent;
+      transition: 0.5s ease;
+      cursor: pointer;
+      text-align: center;
+      color: rgb(174, 173, 173);
+
+      &:hover {
+        border-color: var(--my-secondary);
+      }
+
+      .icon {
+        font-size: 3rem;
+        color: var(--my-secondary);
+      }
+
+      h3 {
+        font-size: 2.7rem;
+        font-weight: bold;
+        color: white;
+      }
+    }
+  }
+
+  @media (width <= 1000px) {
+    height: fit-content;
+
+    h1 {
+      width: 100%;
+      font-size: 5rem;
+    }
+
+    .values {
+      margin: 4rem 0 0 2rem;
+      position: unset;
+      grid-template-columns: 1fr 1fr;
+
+      .value_box {
+        padding: 0;
+      }
+    }
+  }
+
+  @media (width <= 1000px) {
+    .values {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// About section
+.about {
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+
+  .images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .about_text {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    padding-left: 3rem;
+
+    h1 {
+      font-size: 4rem;
+      font-weight: 600;
+      color: var(--mydark);
+      cursor: default;
+    }
+
+    h2 {
+      font-size: 4rem;
+      font-weight: 400;
+      text-align: center;
+      cursor: default;
+    }
+  }
+
+  @media (width <= 1000px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (width <= 700px) {
+    .images {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Team section
+
+.team {
+  text-align: center;
+  .section-title {
+    text-align: center;
+    font-size: 3rem;
+
+    span {
+      text-align: center;
+    }
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+
+    .managers_container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 2rem;
+
+      .manager_card {
+        background: #fff;
+        width: 25rem;
+        margin: 0 auto;
+        padding: 1.5rem;
+        border-radius: 3px;
+        box-shadow: 0 0 10px #e7e5e5;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        img {
+          width: 15rem;
+          height: 15rem;
+          border-radius: 50%;
+        }
+
+        .name {
+          font-size: 2rem;
+          color: var(--pistachio);
+          font-weight: 700;
+        }
+      }
+    }
+
+    .members_container {
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7rem;
+        margin: 4rem 0;
+      }
+
+      .member {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        img {
+          width: 10rem;
+          height: 10rem;
+          border-radius: 50%;
+        }
+
+        .name {
+          text-transform: uppercase;
+          color: var(--pistachio);
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    .container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    .container {
+      .members_container {
+        .row {
+          flex-wrap: wrap;
+        }
+      }
+
+      .managers_container {
+        grid-template-columns: 1fr;
+
+        .manager_card {
+          img {
+            width: 10rem;
+            height: 10rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// contact
+
+.contact_form {
+  h1 {
+    font-size: 5rem;
+    font-weight: 700;
+  }
+}

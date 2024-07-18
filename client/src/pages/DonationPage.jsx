@@ -23,9 +23,7 @@ const DonationPage = () => {
           backgroundSize: "cover",
         }}
         className="donation_banner flex align-center px-[5%]"
-      >
-        {/* <h1>Donate</h1> */}
-      </div>
+      ></div>
 
       <div className="donationContent px-[5%]">
         <div className="flex align-center space-x-3 my-[3rem]">
