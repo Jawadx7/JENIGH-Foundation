@@ -4,7 +4,7 @@ import Navbar from "../components/common/Navbar";
 import SearchInput from "../components/SearchInput";
 import { useState, useEffect } from "react";
 
-const Donations = () => {
+const Donations = ({ User }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -17,7 +17,7 @@ const Donations = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar User={User} />
       <div className="pt-[10rem] flex align-center flex-col justify-center">
         <SearchInput search={search} setSearch={setSearch} />
         <div className="p-5 sm:p-[5rem] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

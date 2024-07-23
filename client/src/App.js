@@ -1,4 +1,5 @@
 import "./App.css";
+import { useEffect, useState } from "react";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
@@ -7,29 +8,26 @@ import DonationPage from "./pages/DonationPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Admin from "./pages/users/Admin/Admin";
 import ClientUser from "./pages/users/ClientUser/ClientUser";
-import { useEffect, useState } from "react";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [User, setUser] = useState([{}]);
 
-  useEffect(async () => {
-    const response = await fetch("http://jsonplaceholder.typicode.com/users");
-    const data = await response.json();
-    console.log(data);
-    // setData(data);
-  }, []);
-
+  useEffect(() => {
+    fetch("http://localhost:3002/api/currentUser")
+      .then((res) => res.json())
+      .then((data) => setUser(data[0]));
+  });
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home User={User} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/donations" element={<Donations />} />
+        <Route path="/donations" element={<Donations User={User} />} />
         <Route path="/donation/:id" element={<DonationPage />} />
         <Route path="/users">
           <Route path="admin" element={<Admin />} />
-          <Route path="clientuser" element={<ClientUser />} />
+          <Route path="clientuser" element={<ClientUser User={User} />} />
         </Route>
       </Routes>
     </Router>
