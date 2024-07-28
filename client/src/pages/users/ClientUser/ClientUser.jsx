@@ -6,7 +6,7 @@ import { useState } from "react";
 import UpdateInfoCard from "./UpdateInfoCard";
 import { Link } from "react-router-dom";
 
-const ClientUser = ({ User }) => {
+const ClientUser = () => {
   const [modalSate, setModalState] = useState("closed");
 
   const openModal = () => {
@@ -28,8 +28,8 @@ const ClientUser = ({ User }) => {
           />
 
           <div className="userInfo my-[1.5rem]">
-            <h1>{User.userName}</h1>
-            <h3>{User.email}</h3>
+            <h1>Sponge Bob</h1>
+            <h3>spongiebobie@email.com</h3>
             {/* <h3>{}</h3> */}
           </div>
 

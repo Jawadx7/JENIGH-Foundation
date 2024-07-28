@@ -12,32 +12,31 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  // const sendCurrentUser = () => {
-
+  // const sendCurrentUser = async () => {
+  //   try {
+  //     console.log({ email });
+  //     const currentUserResult = await axios.post(
+  //       "http://localhost:3002/api/loggedin",
+  //       { email }
+  //     );
+  //     console.log("current user sent", currentUserResult);
+  //   } catch (currentUserError) {
+  //     console.log("current user not sent", currentUserError);
+  //   }
   // };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const loginResult = await axios.post("http://localhost:3001/login", {
+      const loginResult = await axios.post("http://localhost:3001/auth/login", {
         email,
         password,
       });
 
       if (loginResult.data === "login success") {
         navigate("/users/clientuser");
-
-        try {
-          console.log({ email });
-          const currentUserResult = await axios.post(
-            "http://localhost:3002/api/loggedin",
-            { email }
-          );
-          console.log("current user sent", currentUserResult);
-        } catch (currentUserError) {
-          console.log("current user not sent", currentUserError);
-        }
+        // sendCurrentUser();
       } else if (loginResult.data === "login failed") {
         setMessage(
           "The password was incorrect. Try again or choose 'Forgot Password'"
@@ -52,33 +51,6 @@ const Login = () => {
     }
   };
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const loginResults = await axios
-  //       .post("http://localhost:3001/login", { email, password })
-  //       .then((result) => {
-  //         if (result.data === "login success") {
-  //           navigate("/users/clientuser");
-  //           axios
-  //             .post("http://localhost:3002/api/currentUser", "hello")
-  //             .then((result) => console.log("current user sent"))
-  //             .catch((error) => console.log("current user not sent"));
-  //         } else if (result.data === "login failed") {
-  //           setMessage(
-  //             "The password was incorret. Try again or choose 'Forgot Password'"
-  //           );
-  //         } else if (result.data === "no user found") {
-  //           setMessage(
-  //             "No user with this email was found. Try creating an account first"
-  //           );
-  //         }
-  //       })
-  //       .catch((error) => console.log(error));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   return (
     <div className="page_body">
       <section id="main-page">

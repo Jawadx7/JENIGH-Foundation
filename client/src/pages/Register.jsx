@@ -19,7 +19,7 @@ const Register = () => {
       setMessage("Passwords do not match");
     } else {
       axios
-        .post("http://localhost:3001/register", {
+        .post("http://localhost:3001/auth/register", {
           userName,
           email,
           password,

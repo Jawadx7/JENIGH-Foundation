@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import logo from "../../asserts/images/logo.png";
-import img from "../../asserts/images/person_1.jpg";
+// import img from "../../asserts/images/person_1.jpg";
 import "../../asserts/css/navbar.scss";
 
-const Navbar = ({ User }) => {
+const Navbar = () => {
   return (
     <header className="bg-white shadow-md flex align-center justify-between py-[1rem] px-[5%] fixed top-0 w-full left-0 z-20">
       <img src={logo} alt="logo" className="w-[6rem]" />
@@ -17,7 +17,11 @@ const Navbar = ({ User }) => {
         </Link>
       </ul>
 
-      <div>
+      <Link to={"/login"} className="btn btn_primary">
+        sign in
+      </Link>
+
+      {/* <div>
         {User ? (
           <Link to="/users/clientuser">
             <img
@@ -31,7 +35,7 @@ const Navbar = ({ User }) => {
             sign in
           </Link>
         )}
-      </div>
+      </div> */}
     </header>
   );
 };

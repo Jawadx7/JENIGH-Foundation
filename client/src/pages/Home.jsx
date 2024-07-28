@@ -9,7 +9,7 @@ import { donations_json } from "../asserts/mocks/donations_json";
 import logo from "../asserts/images/logo.png";
 import contactImg from "../asserts/images/about-img-3.jpg";
 
-const Home = ({ User }) => {
+const Home = () => {
   return (
     <>
       {/* Navbar  */}
@@ -32,7 +32,11 @@ const Home = ({ User }) => {
           </a>
         </ul>
 
-        <div>
+        <Link to={"/login"} className="btn btn_primary">
+          sign in
+        </Link>
+
+        {/* <div>
           {User ? (
             <Link to="/users/clientuser">
               <img
@@ -46,7 +50,7 @@ const Home = ({ User }) => {
               sign in
             </Link>
           )}
-        </div>
+        </div> */}
       </header>
 
       <div className="hero" id="home">
