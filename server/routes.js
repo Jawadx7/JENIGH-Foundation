@@ -11,7 +11,6 @@ const router = express.Router();
 // add donation
 router.post("/donations/new", (req, res) => {
   const newDonation = req.body;
-  console.log(newDonation);
   DonationModel.create(newDonation)
     .then((result) => res.status(200).json({ message: "donation added" }))
     .catch((error) => res.status(400).json({ message: "donation not added" }));

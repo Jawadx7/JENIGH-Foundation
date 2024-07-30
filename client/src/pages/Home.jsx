@@ -5,11 +5,10 @@ import aboutImg1 from "../asserts/images/about-img-1.jpg";
 import { Link } from "react-router-dom";
 import Footer from "../components/common/Footer";
 import DonationCard from "../components/Donations/DonationCard";
-import { donations_json } from "../asserts/mocks/donations_json";
 import logo from "../asserts/images/logo.png";
 import contactImg from "../asserts/images/about-img-3.jpg";
 
-const Home = () => {
+const Home = ({ donations }) => {
   return (
     <>
       {/* Navbar  */}
@@ -182,8 +181,8 @@ const Home = () => {
       {/* Donations List */}
       <section id="donations">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[3rem] mb-[5rem]">
-          {donations_json.map((donationItem) => (
-            <DonationCard key={donationItem.id} donation={donationItem} />
+          {donations.map((donationItem) => (
+            <DonationCard key={donationItem._id} donation={donationItem} />
           ))}
         </div>
 

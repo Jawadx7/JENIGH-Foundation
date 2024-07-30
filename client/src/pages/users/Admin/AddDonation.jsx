@@ -5,7 +5,8 @@ const AddDonation = () => {
   const [name, setDonationName] = useState("");
   const [cause, setCause] = useState("");
   const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [raised, setRaised] = useState(0);
   const [beneficiaries, setBeneficiaries] = useState([]);
   const [closing, setClosing] = useState("");
   const [bannerImg, setBannerImg] = useState("");
@@ -19,6 +20,7 @@ const AddDonation = () => {
         cause,
         description,
         amount,
+        raised,
         beneficiaries: beneficiariesList,
         closing,
         bannerImg,
@@ -112,9 +114,23 @@ const AddDonation = () => {
           <input
             type="number"
             required
-            placeholder="eg. Education, Food Supply ..."
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
+          />
+        </div>
+        {/* input end */}
+        {/* input */}
+        <div className="my-[1rem]">
+          <div className="flex align-center space-x-3">
+            <label htmlFor="campaignName">Amount Raised ($):</label>
+            <span className="text-red-500">*</span>
+          </div>
+          <input
+            type="number"
+            required
+            value={raised}
+            onChange={(e) => setRaised(e.target.value)}
             className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
           />
         </div>

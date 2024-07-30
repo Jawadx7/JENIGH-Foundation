@@ -5,7 +5,7 @@ import DonationsList from "./DonationsList";
 import UsersList from "./UsersList";
 import AddDonation from "./AddDonation";
 
-const Admin = () => {
+const Admin = ({ donations }) => {
   const [active, setActive] = useState("dashboard");
   return (
     <div className="AdminPageContainer">
@@ -14,7 +14,7 @@ const Admin = () => {
       </div>
       <main>
         {active === "dashboard" ? (
-          <DonationsList />
+          <DonationsList donations={donations} />
         ) : active === "users" ? (
           <UsersList />
         ) : (

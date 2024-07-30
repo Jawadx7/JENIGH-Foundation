@@ -1,12 +1,11 @@
 import AdminDonationCard from "./AdminDonationCard";
-import { donations_json } from "../../../asserts/mocks/donations_json";
 
-const DonationsList = () => {
+const DonationsList = ({ donations }) => {
   return (
     <div className="DonationsList">
-      {donations_json
-        ? donations_json.map((donation) => (
-            <AdminDonationCard key={donation.id} donation={donation} />
+      {donations
+        ? donations.map((donation) => (
+            <AdminDonationCard key={donation._id} donation={donation} />
           ))
         : "NO DONATIONS TO SHOW"}
     </div>
