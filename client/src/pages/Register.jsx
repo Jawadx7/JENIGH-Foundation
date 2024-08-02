@@ -13,6 +13,7 @@ const Register = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const handleRegister = async (e) => {
     try {
       e.preventDefault();
@@ -34,6 +35,25 @@ const Register = () => {
     catch (err) {
       console.log(err);
 
+=======
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+    } else {
+      axios
+        .post("http://localhost:3001/auth/register", {
+          userName,
+          email,
+          password,
+          confirmPassword,
+        })
+        .then(() => {
+          console.log("posted");
+          navigate("/login");
+        })
+        .catch((error) => console.log(error));
+>>>>>>> 6087d8cc1e8e209d9e77834e37db0d2cc1669e64
     }
   };
 
