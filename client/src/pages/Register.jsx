@@ -13,25 +13,31 @@ const Register = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
-    } else {
-      axios
-        .post("http://localhost:3001/register", {
-          userName,
-          email,
-          password,
-          confirmPassword,
-        })
-        .then(() => {
-          console.log("posted");
-          navigate("/login");
-        })
-        .catch((error) => console.log(error));
+  const handleRegister = async (e) => {
+    try {
+      e.preventDefault();
+      if (password !== confirmPassword) {
+        setMessage("Passwords do not match");
+        return;
+      }
+      const response = await axios.post('http://localhost:3001/auth/register', {
+        userName,
+        email,
+        password
+
+      })
+      if (response.status === 200) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/donations');
+      }
+    }
+    catch (err) {
+      console.log(err);
+
     }
   };
+
+
 
   return (
     <div className="page_body">

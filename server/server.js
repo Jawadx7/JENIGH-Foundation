@@ -1,71 +1,70 @@
+const http = require("http");
 const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-require("dotenv").config();
-const port = process.env.PORT1 || 3001;
-const UserModel = require("./models/User");
-const bcrypt = require("bcrypt");
-const saltrounds = 10;
+const firebase = require("firebase-admin");
+const helmet = require('helmet');
+const hpp = require('hpp');
+const rateLimit = require('express-rate-limit');
+const xss = require('xss-clean');
+const cors = require('cors');
+const compression = require('compression');
+const morgan = require('morgan');
+const cookieParser = require("cookie-parser");
+require('dotenv').config();
 
 const app = express();
+const port = process.env.PORT || 3001;
 
+
+
+app.use(cookieParser());
 app.use(cors());
-app.use(express.json());
+app.use(helmet());
+app.use(hpp());
+app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true, preload: true }));
+app.set('trust proxy', 'loopback');
+app.use(compression());
+app.use(express.json({ limit: '5mb' }));
 
-mongoose
-  .connect(
-    `mongodb+srv://jxdAdmin:${process.env.PASSWORD}@jenighdb.oope8gi.mongodb.net/${process.env.COLLECTION_NAME}?retryWrites=true&w=majority&appName=jenighDB`
-  )
-  .then(() => {
-    console.log("conected to database");
-    app.listen(port, () => {
-      console.log(`App is running on port ${port}`);
-    });
-  })
-  .catch(() => console.log("could not connect to database"));
+app.use(xss());
 
-app.get("/", (req, res) => {
-  res.send([
-    { username: "Jawad", email: "jwd@gmail.com" },
-    { username: "Dori", email: "dori@gmail.com" },
-  ]);
+// CORS setup
+const corsOptions = {
+  origin: function(origin, callback) {
+    callback(null, origin || '*');
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Too many requests, please try again after 15 minutes'
 });
 
-app.post("/register", async (req, res) => {
-  try {
-    const { password, ...others } = req.body;
+app.use(limiter);
+app.use('/auth/login', limiter);
 
-    const hashedPassword = await bcrypt.hash(password, saltrounds);
+app.use(morgan('combined'));
 
-    const newUser = {
-      ...others,
-      password: hashedPassword,
-    };
+// Firebase initialization
+const firebaseServiceAccount = require('./donations.json');
 
-    UserModel.create(newUser)
-      .then((user) => res.status(201).json(user))
-      .catch((error) => res.status(400).json(error));
-  } catch (error) {
-    console.log("error when hashing and sending to db");
-  }
+firebase.initializeApp({
+  credential: firebase.credential.cert(firebaseServiceAccount),
+  databaseURL: "https://donations-da524-default-rtdb.asia-southeast1.firebasedatabase.app"
 });
 
-app.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await UserModel.findOne({ email });
+// Routes
+const authRouter = require('./routes/auth');
+const users = require('./routes/users');
 
-    if (!user) {
-      res.send("no user found");
-    } else {
-      const isValid = await bcrypt.compare(password, user.password);
-      if (!isValid) {
-        res.send("login failed");
-      } else {
-        res.send("login success");
-      }
-    }
-  } catch (error) {
-    res.send(error);
-  }
+app.use('/auth', authRouter);
+app.use('/users', users);
+
+
+http.createServer(app).listen(port, () => {
+  console.log(`Server is running on localhost:${port}`);
 });
