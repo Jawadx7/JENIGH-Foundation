@@ -8,16 +8,20 @@ import DonationPage from "./pages/DonationPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Admin from "./pages/users/Admin/Admin";
 import ClientUser from "./pages/users/ClientUser/ClientUser";
+import UpdateDonation from "./pages/users/Admin/UpdateDonation";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function App() {
-  // const [User, setUser] = useState([{}]);
   const [donations, setDonations] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/donations")
-      .then((res) => res.json())
-      .then((data) => setDonations(data));
+    axios
+      .get("http://localhost:3001/api/donations")
+      .then((res) => setDonations(res.data))
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
@@ -35,7 +39,14 @@ function App() {
           element={<DonationPage donations={donations} />}
         />
         <Route path="/users">
-          <Route path="admin" element={<Admin donations={donations} />} />
+          <Route path="admin">
+            <Route index element={<Admin />} />
+            <Route path="update/:id" element={<UpdateDonation />} />
+            <Route
+              path="donation/:id"
+              element={<DonationPage donations={donations} />}
+            />
+          </Route>
           <Route path="clientuser" element={<ClientUser />} />
         </Route>
       </Routes>

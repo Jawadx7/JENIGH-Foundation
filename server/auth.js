@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+// const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const UserModel = require("./models/User");
 const bcrypt = require("bcrypt");
@@ -17,12 +17,18 @@ router.get("/", (req, res) => {
 
 router.post("/register", async (req, res) => {
   try {
-    const { password, ...others } = req.body;
+    const { password, email, ...others } = req.body;
+    const user = await UserModel.find({ email });
+
+    if (user) {
+      res.send("user already exist");
+    }
 
     const hashedPassword = await bcrypt.hash(password, saltrounds);
 
     const newUser = {
       ...others,
+      email,
       password: hashedPassword,
     };
 
@@ -46,6 +52,10 @@ router.post("/login", async (req, res) => {
       if (!isValid) {
         res.send("login failed");
       } else {
+        // const token = jwt.sign({ email: email }, process.env.JWT_PASSWORD, {
+        //   expiresIn: "1hr",
+        // });
+        // res.cookie("token", token, { httpOnly: true, maxAge: 360000 });
         res.send("login success");
       }
     }

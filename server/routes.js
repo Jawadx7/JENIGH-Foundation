@@ -11,9 +11,28 @@ const router = express.Router();
 // add donation
 router.post("/donations/new", (req, res) => {
   const newDonation = req.body;
-  DonationModel.create(newDonation)
-    .then((result) => res.status(200).json({ message: "donation added" }))
-    .catch((error) => res.status(400).json({ message: "donation not added" }));
+  try {
+    DonationModel.create(newDonation)
+      .then(() => res.status(200).json({ message: "donation added" }))
+      .catch(() => res.status(400).json({ message: "donation not added" }));
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Deleting a donation
+router.delete("/donations/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await DonationModel.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).json({ message: "Donation not found" });
+    } else {
+      return res.status(200).json({ message: "Donation Deleted successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // get all donation
@@ -33,6 +52,21 @@ router.get("/users", async (req, res) => {
     res.status(200).send(users);
   } catch (error) {
     res.send(error);
+  }
+});
+
+// Deleting a user
+router.delete("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await UserModel.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).json({ message: "User not found" });
+    } else {
+      return res.status(200).json({ message: "User Deleted successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

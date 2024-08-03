@@ -8,12 +8,12 @@ const Donations = ({ donations }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  // useEffect(() => {
-  //   const results = donations.filter((donation) =>
-  //     donation.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-  //   );
-  //   setSearchResults(results);
-  // }, [search, donations]);
+  useEffect(() => {
+    const results = donations.filter((donation) =>
+      donation.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    );
+    setSearchResults(results);
+  }, [search, donations]);
 
   return (
     <>
@@ -21,8 +21,8 @@ const Donations = ({ donations }) => {
       <div className="pt-[10rem] flex align-center flex-col justify-center">
         <SearchInput search={search} setSearch={setSearch} />
         <div className="p-5 sm:p-[5rem] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {donations ? (
-            donations.map((donation) => (
+          {searchResults ? (
+            searchResults.map((donation) => (
               <DonationCard key={donation._id} donation={donation} />
             ))
           ) : (

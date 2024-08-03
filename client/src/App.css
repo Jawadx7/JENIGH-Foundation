@@ -253,3 +253,41 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+.spinner_container {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: #0000007d;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.spinner_container .outer_spinner {
+  position: absolute;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100%;
+  background: transparent;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner_container .outer_spinner {
+  width: 10rem;
+  height: 10rem;
+  /* position: absolute; */
+  border-right: 10px solid teal;
+  animation: spin_animate 1s linear infinite;
+}
+
+@keyframes spin_animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

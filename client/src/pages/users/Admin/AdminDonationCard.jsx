@@ -1,6 +1,7 @@
 import "../../../asserts/css/donations.scss";
 import "../../../App.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const AdminDonationCard = ({ donation }) => {
   let donation_percentage = 0;
@@ -9,20 +10,23 @@ const AdminDonationCard = ({ donation }) => {
   } else {
     donation_percentage = 100;
   }
-  return (
-    <li>
-      <div className="donate-card">
-        {/* <figure className="card-banner">
-          <img
-            src={donation.img}
-            width="520"
-            height="325"
-            loading="lazy"
-            alt="Elephant"
-            className="img-cover"
-          />
-        </figure> */}
 
+  const handleDelete = () => {
+    const donationId = donation._id;
+    const password = prompt("Enter Admin Password to delete Donation.");
+    if (password !== "adminpin") {
+      alert("you dont have permission to delete a Donation");
+    } else {
+      axios
+        .delete(`http://localhost:3001/api/donations/${donationId}`)
+        .then((result) => alert("Donation has been deleted successfully"))
+        .catch((error) => console.log(error));
+    }
+  };
+
+  return (
+    <li key={donation._id}>
+      <div className="donate-card">
         <div className="card-content">
           <div className="progress-wrapper">
             <p className="progress-text">
@@ -75,15 +79,19 @@ const AdminDonationCard = ({ donation }) => {
           </div>
 
           <Link
-            to={`/donation/${donation._id}/#donation`}
+            to={`/users/admin/donation/${donation._id}`}
             className="btn btn-secondary"
           >
             <span>Learn More</span>
           </Link>
 
           <div className="mt-[2rem] grid align-center grid-cols-1 md:grid-cols-2 gap-5">
-            <button className="btn">UPDATE</button>
-            <button className="btn btn-secondary">DELETE</button>
+            <Link to={`update/${donation._id}`} className="btn">
+              UPDATE
+            </Link>
+            <button className="btn btn-secondary" onClick={handleDelete}>
+              DELETE
+            </button>
           </div>
         </div>
       </div>

@@ -19,6 +19,7 @@ const Sidebar = ({ active, setActive }) => {
         >
           Donations
         </Link>
+        <br />
         <Link
           className={`${
             active === "users"
@@ -29,6 +30,7 @@ const Sidebar = ({ active, setActive }) => {
         >
           Users
         </Link>
+        <br />
         <Link
           className={`${
             active === "add"
