@@ -34,19 +34,23 @@ const Login = () => {
         password,
       });
 
-      if (loginResult.data === "login success") {
+      if (loginResult.status === 200) {
+        localStorage.setItem('token' , loginResult.data.token);
         navigate("/users/clientuser");
         // sendCurrentUser();
+<<<<<<< HEAD
+     
+      }
+    } catch (error) {
+      if(error.response.error){
+=======
       } else if (loginResult.data === "login failed") {
+>>>>>>> 6087d8cc1e8e209d9e77834e37db0d2cc1669e64
         setMessage(
           "The password was incorrect. Try again or choose 'Forgot Password'"
         );
-      } else if (loginResult.data === "no user found") {
-        setMessage(
-          "No user with this email was found. Try creating an account first"
-        );
+
       }
-    } catch (error) {
       console.log("Login error:", error);
     }
   };
