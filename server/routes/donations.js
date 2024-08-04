@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const firebase = require("firebase-admin");
-const db = firebase.database();
 const secretKey =  "Donations2024?????";
 
 

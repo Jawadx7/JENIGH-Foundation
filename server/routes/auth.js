@@ -3,12 +3,12 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const firebase = require("firebase-admin");
 const saltRounds = 12;
-const db = firebase.database();
 const secretKey =  "Donations2024?????";
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
+const UserModel = require('../models/User');
+
 
 
 const validateInput = [
@@ -39,102 +39,97 @@ function generateJoinDate() {
 
     return formattedJoinDate;
 }
-
-router.post("/register", validateInput, async (req, res) => {
+router.post('/register', validateInput, async (req, res) => {
     const errors = validationResult(req);
     const joinDate = generateJoinDate();
     const { userName, email, password } = req.body;
-    
-
+  
     if (!userName || !email || !password) {
-        return res.status(400).json({ error: "Missing Field." });
-    };
-
-    if (password < 8) {
-        return res.status(400).json({ error: "Password Must be 8 Charcaters or More." });
+      return res.status(400).json({ error: 'Missing Field.' });
     }
-
-
+  
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Password Must be 8 Characters or More.' });
+    }
+  
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
-
+  
     try {
-       
-        const emailSnapshot = await db.ref('users').orderByChild('email').equalTo(email).once('value');
-        if (emailSnapshot.exists()) {
-            return res.status(400).json({ error: "Email already registered." });
-        }
-
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-        const userRef = db.ref('users').push();
-        await userRef.set({
-            email: email,
-            password: hashedPassword,
-            username: userName,
-            joinDate: joinDate,
-
-        });
-
-
-        const newToken = jwt.sign(
-            { email: email },
-            secretKey,
-            { expiresIn: "7D" }
-        );
-
-        return res.status(200).json({ token: newToken });
+      const existingUser = await UserModel.findOne({ email });
+  
+      if (existingUser) {
+        return res.status(400).json({ error: 'Email already registered.' });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+  
+      const newUser = new UserModel({
+        email,
+        password: hashedPassword,
+        userName,
+        joinDate,
+      });
+  
+      await newUser.save();
+  
+      const newToken = jwt.sign(
+        { email },
+        secretKey,
+        { expiresIn: '7d' }
+      );
+  
+      return res.status(200).json({ token: newToken  , username :userName , email:email,  bio : ''});
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Something went wrong." })
+      console.error(error);
+      res.status(500).json({ error: 'Something went wrong.' });
     }
-});
+  });
 
-router.post("/login", extractEmail, createUserRateLimiter((req) => req.email), validateInput, async (req, res) => {
+  router.post('/login', extractEmail, createUserRateLimiter((req) => req.email), validateInput, async (req, res) => {
     const { email, password } = req.body;
     const errors = validationResult(req);
-
+    let profilePictureUrl;
+  
     if (!email || !password) {
-        return res.status(400).json({ error: "Missing Field." });
-    };
-
+      return res.status(400).json({ error: 'Missing Field.' });
+    }
+  
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
+  
     try {
+      const user = await UserModel.findOne({ email });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'Incorrect email or password.' });
+      }
+  
+      const isMatch = await bcrypt.compare(password, user.password);
+  
+      if (!isMatch) {
+        return res.status(401).json({ error: 'Incorrect email or password.' });
+      }
+  
+      const newToken = jwt.sign(
+        { email: user.email },
+        secretKey,
+        { expiresIn: '7d' }
+      );
 
-        const snapshot = await db.ref('users').orderByChild('email').equalTo(email).once('value');
-        const userData = snapshot.val();
 
-        if (!userData) {
+      if (user.profilePicture) {
+        const formattedUrl = user.profilePicture.replace(/\\/g, '/');
+        profilePictureUrl =`${req.protocol}://${req.get('host')}/${formattedUrl}` ;
+      }
 
-            return res.status(404).json({ error: "Incorrect email or password." });
-        }
-
-        const userId = Object.keys(userData)[0];
-        const user = userData[userId];
-
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-
-            return res.status(401).json({ error: "Incorrect email or password." });
-          }
-
-        const userRef = db.ref(`users/${userId}`);
-        await userRef.update({ isLoggedIn: true });
-
-        const newToken = jwt.sign(
-            { email: user.email },
-            secretKey,
-            { expiresIn: "7d" }
-        );
-
-        res.status(200).json({ token: newToken });
+  
+      res.status(200).json({ token: newToken  , username :user.userName , email:user.email , bio :user.bio || '' , profilePictureUrl:profilePictureUrl || ''});
     } catch (error) {
-        res.status(500).json({error:"Something went wrong on our side."});
+      res.status(500).json({ error: 'Something went wrong on our side.' });
     }
-});
+  });
 
 module.exports = router;
