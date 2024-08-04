@@ -17,6 +17,7 @@ const app = express();
 
 const AuthRoutes = require("./routes/auth");
 const UsersRoutes = require("./routes/users");
+const DonationsRoutes = require("./routes/donations");
 
 app.use(cookieParser());
 
@@ -70,6 +71,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Routes
 app.use("/auth", AuthRoutes);
 app.use("/users", UsersRoutes);
+app.use("/donations", DonationsRoutes);
 
 http.createServer(app).listen(port, () => {
   console.log(`Server is running on localhost:${port}`);

@@ -2,6 +2,7 @@ import AdminDonationCard from "./AdminDonationCard";
 import Spinner from "../../../components/Spinner";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../../../asserts/css/admin.scss";
 
 const DonationsList = () => {
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ const DonationsList = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:3001/api/donations")
+      .get("http://localhost:3001/donations")
       .then((response) => {
         setDonations(response.data);
         setLoading(false);
@@ -22,13 +23,19 @@ const DonationsList = () => {
 
   return (
     <div>
-      <div className="DonationsList">
-        {donations
-          ? donations.map((donation) => (
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="DonationsList">
+          {donations.length ? (
+            donations.map((donation) => (
               <AdminDonationCard key={donation._id} donation={donation} />
             ))
-          : "NO DONATIONS TO SHOW"}
-      </div>
+          ) : (
+            <h1 className="h2 text-[3rem]">NO DONATIONS TO SHOW</h1>
+          )}
+        </div>
+      )}
     </div>
   );
 };
