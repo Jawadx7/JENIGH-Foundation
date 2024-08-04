@@ -4,23 +4,29 @@ const UserSchema = new mongoose.Schema(
   {
     userName: {
       type: String,
-      required: [true, "Username cannot be blank"],
+      required: [true, 'Username cannot be blank'],
     },
     email: {
       type: String,
-      required: [true, "email cannot be blank"],
+      required: [true, 'Email cannot be blank'],
+      unique: true,
     },
     password: {
       type: String,
-      required: [true, "password cannot be blank"],
+      required: [true, 'Password cannot be blank'],
     },
-    confirmPassword: {
+    bio: {
       type: String,
-      required: [true, "password cannot be blank"],
+    },
+    profilePicture: {
+      type: String,
     },
   },
   { timestamps: true }
 );
 
-const UserModel = mongoose.model("user", UserSchema);
+
+const UserModel = mongoose.model('User', UserSchema);
+
+
 module.exports = UserModel;

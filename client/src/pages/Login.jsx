@@ -10,50 +10,44 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [IsLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  // const sendCurrentUser = async () => {
-  //   try {
-  //     console.log({ email });
-  //     const currentUserResult = await axios.post(
-  //       "http://localhost:3002/api/loggedin",
-  //       { email }
-  //     );
-  //     console.log("current user sent", currentUserResult);
-  //   } catch (currentUserError) {
-  //     console.log("current user not sent", currentUserError);
-  //   }
-  // };
+  const setLocalStorageItems = (items) => {
+    for (const [key, value] of Object.entries(items)) {
+      localStorage.setItem(key, value);
+    }
+  };
 
-  // axios.defaults.withCredentials = true;
   const handleLogin = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
-      const loginResult = await axios.post("http://localhost:3001/auth/login", {
+      const response = await axios.post("http://localhost:3001/auth/login", {
         email,
         password,
       });
 
-      if (loginResult.status === 200) {
-        localStorage.setItem('token' , loginResult.data.token);
+      if (response.status === 200) {
+        setLocalStorageItems({
+          token: response.data.token,
+          email: response.data.email,
+          username: response.data.username,
+          bio : response.data.bio,
+          profilePictureUrl : response.data.profilePictureUrl,
+        });
         navigate("/users/clientuser");
-        // sendCurrentUser();
-<<<<<<< HEAD
      
       }
-    } catch (error) {
-      if(error.response.error){
-=======
-      } else if (loginResult.data === "login failed") {
->>>>>>> 6087d8cc1e8e209d9e77834e37db0d2cc1669e64
-        setMessage(
-          "The password was incorrect. Try again or choose 'Forgot Password'"
-        );
-
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        setMessage(err.response.data.error);
+      } else {
+        setMessage("Login failed. Please try again.");
       }
-      console.log("Login error:", error);
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -63,16 +57,10 @@ const Login = () => {
         <section id="main-page">
           <div id="left-container">
             <div className="top-section">
-              {/* <div className="div-img"></div> */}
+            
               <img src={loginImg} alt="" />
             </div>
-            {/* <div className="botton-section">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad,
-              explicabo. Loremmm ipsum dolor sit amet consectetur adipisicing
-              elit. Quod eligendi non
-            </p>
-          </div> */}
+            
           </div>
           <div id="right-container" className="py-5">
             <div className="welcome-back">
@@ -108,6 +96,7 @@ const Login = () => {
               </form>
             </div>
           </div>
+          {IsLoading && <Spinner />}
         </section>
       </div>
     </>

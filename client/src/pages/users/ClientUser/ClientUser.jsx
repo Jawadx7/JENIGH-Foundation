@@ -1,13 +1,45 @@
 import "../../../asserts/css/client.scss";
 import ClientDonationsList from "./clientDonationsList";
-import profile from "../../../asserts/images/person_3.jpg";
+import profile from "../../../asserts/images/user.png";
 import "../../../App.css";
-import { useState } from "react";
+import { useState  , useEffect} from "react";
 import UpdateInfoCard from "./UpdateInfoCard";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ClientUser = () => {
   const [modalSate, setModalState] = useState("closed");
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [token, setToken] = useState('');
+  const [bio , setBio] = useState('');
+  const [url , setUrl]=useState(null);
+
+  useEffect(() => {
+    try {
+      const token = localStorage.getItem('token');
+      const username = localStorage.getItem('username');
+      const email = localStorage.getItem('email');
+      const bio = localStorage.getItem('bio') || '';
+      const Picture =  localStorage.getItem('profilePictureUrl') || profile;
+      
+
+      if (!token || !username || !email) {
+        navigate('/login');
+        return;
+      }
+
+      setUsername(username);
+      setEmail(email);
+      setToken(token);
+      setBio(bio);
+      setUrl(Picture);
+    } catch (error) {
+     
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const openModal = () => {
     setModalState("opened");
@@ -17,20 +49,27 @@ const ClientUser = () => {
     setModalState("closed");
   };
 
+  const handleLogout = () => {
+   
+    localStorage.clear();
+    navigate("/login"); 
+  };
+
   return (
     <>
       <div className="clientPage relative">
         <div className="sidebar relative">
           <img
-            src={profile}
+            src={url}
             alt="profile pic"
             className="w-[50%] mx-auto rounded-full"
           />
 
           <div className="userInfo my-[1.5rem]">
-            <h1>Sponge Bob</h1>
-            <h3>spongiebobie@email.com</h3>
-            {/* <h3>{}</h3> */}
+            <h1>{username}</h1>
+            <h3>{email}</h3>
+            <p>{bio}</p>
+           
           </div>
 
           <div
@@ -40,7 +79,10 @@ const ClientUser = () => {
             Update Info
           </div>
 
-          <div className="btn my-5 text-center absolute bottom-0 l-0 cursor-pointer">
+          <div
+            className="btn my-5 text-center absolute bottom-0 left-0 cursor-pointer"
+            onClick={handleLogout}
+          >
             Log Out
           </div>
         </div>

@@ -10,7 +10,7 @@ const UsersList = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:3001/api/users")
+      .get("http://localhost:3001/users")
       .then((response) => {
         setUsers(response.data);
         setLoading(false);
@@ -25,12 +25,17 @@ const UsersList = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {users.map((user) => (
-            <UserCard key={user._id} user={user} />
-          ))}
+        <div>
+          {users.length ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {users.map((user) => (
+                <UserCard key={user._id} user={user} />
+              ))}
+            </div>
+          ) : (
+            <h1 className="h2 text-[3rem]">NO USERS TO SHOW</h1>
+          )}
         </div>
-        // <h1>hello</h1>
       )}
     </div>
   );

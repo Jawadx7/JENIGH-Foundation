@@ -1,6 +1,8 @@
 import "../asserts/css/home.scss";
 import "../App.css";
 import img from "../asserts/images/person_1.jpg";
+import HenryImg from "../asserts/images/Henry.jpg";
+import JawadImg from "../asserts/images/Jawad.jpeg";
 import aboutImg1 from "../asserts/images/about-img-1.jpg";
 import { Link } from "react-router-dom";
 import Footer from "../components/common/Footer";
@@ -129,35 +131,35 @@ const Home = ({ donations }) => {
           <div className="members_container">
             <div className="row">
               <div className="member">
-                <img src={img} alt="" />
-                <div className="name">Jon Doe</div>
-                <small>CEO / Project Manager</small>
+                <img src={JawadImg} alt="" />
+                <div className="name">Nassam Mohammed Jawad</div>
+                <small>Project Manager</small>
               </div>
               <div className="member">
                 <img src={img} alt="" />
-                <div className="name">Jon Doe</div>
+                <div className="name">Gyamfi Jonathan Douglas</div>
                 <small>Frontend Developer</small>
               </div>
               <div className="member">
                 <img src={img} alt="" />
-                <div className="name">Jon Doe</div>
+                <div className="name">Naatey Joseph Angmor</div>
                 <small>Public Relations Officer</small>
               </div>
             </div>
             <div className="row">
               <div className="member">
                 <img src={img} alt="" />
-                <div className="name">Jon Doe</div>
-                <small>Backend Developer</small>
+                <div className="name">Effah Clement Poku</div>
+                <small>Information</small>
+              </div>
+              <div className="member">
+                <img src={HenryImg} alt="" />
+                <div className="name">Boakye Henry</div>
+                <small>Database Manager</small>
               </div>
               <div className="member">
                 <img src={img} alt="" />
-                <div className="name">Jon Doe</div>
-                <small>Software Engeneering Lead</small>
-              </div>
-              <div className="member">
-                <img src={img} alt="" />
-                <div className="name">Jon Doe</div>
+                <div className="name">Mohammed Iddriss Adam</div>
                 <small>Designer and Illustrator</small>
               </div>
             </div>
@@ -166,13 +168,13 @@ const Home = ({ donations }) => {
           <div className="managers_container">
             <div className="manager_card">
               <img src={img} alt="" />
-              <div className="name">Prof. John Doe</div>
+              <div className="name">Mr. Emmanuel Quayson</div>
               <p>Supervisor</p>
             </div>
             <div className="manager_card">
               <img src={img} alt="" />
-              <div className="name">Dr. Sara Smith</div>
-              <p>Supervisor</p>
+              <div className="name">Dr. Eugene Angelina Smith</div>
+              <p>Assistant Supervisor</p>
             </div>
           </div>
         </div>
@@ -180,15 +182,23 @@ const Home = ({ donations }) => {
 
       {/* Donations List */}
       <section id="donations">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[3rem] mb-[5rem]">
-          {donations.map((donationItem) => (
-            <DonationCard key={donationItem._id} donation={donationItem} />
-          ))}
-        </div>
+        {donations.length ? (
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[3rem] mb-[5rem]">
+              {donations.map((donationItem) => (
+                <DonationCard key={donationItem._id} donation={donationItem} />
+              ))}
+            </div>
 
-        <Link to="donations" className="btn btn-secondary w-fit mx-auto">
-          View More
-        </Link>
+            <Link to="donations" className="btn btn-secondary w-fit mx-auto">
+              View More
+            </Link>
+          </div>
+        ) : (
+          <h1 className="text-[2rem] text-center">
+            NO Donation Available yet...
+          </h1>
+        )}
       </section>
 
       {/* Contact Us */}

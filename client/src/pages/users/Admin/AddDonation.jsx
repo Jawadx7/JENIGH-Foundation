@@ -15,7 +15,7 @@ const AddDonation = () => {
     e.preventDefault();
     const beneficiariesList = beneficiaries.split(" ");
     axios
-      .post("http://localhost:3001/api/donations/new", {
+      .post("http://localhost:3001/donations/new", {
         name,
         cause,
         description,
@@ -25,8 +25,10 @@ const AddDonation = () => {
         closing,
         bannerImg,
       })
-      .then((result) => console.log(result))
-      .catch((error) => console.log(error));
+      .then((response) => console.log(response))
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

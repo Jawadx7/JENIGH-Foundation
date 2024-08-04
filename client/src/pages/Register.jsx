@@ -4,6 +4,7 @@ import signupImg from "../asserts/images/register.png";
 import { useState } from "react";
 import axios from "axios";
 import Message from "../components/Message";
+import Spinner from "../components/Spinner";
 
 const Register = () => {
   const [userName, setUserName] = useState("");
@@ -11,49 +12,51 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [IsLoading , setIsloading] = useState(false);
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  const handleRegister = async (e) => {
-    try {
-      e.preventDefault();
-      if (password !== confirmPassword) {
-        setMessage("Passwords do not match");
-        return;
-      }
-      const response = await axios.post('http://localhost:3001/auth/register', {
-        userName,
-        email,
-        password
-
-      })
-      if (response.status === 200) {
-        localStorage.setItem('token', response.data.token);
-        navigate('/donations');
-      }
+  const setLocalStorageItems = (items) => {
+    for (const [key, value] of Object.entries(items)) {
+      localStorage.setItem(key, value);
     }
-    catch (err) {
-      console.log(err);
+  };
+  
 
-=======
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
+    setMessage('');
+    setIsloading(true);
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
-    } else {
-      axios
-        .post("http://localhost:3001/auth/register", {
-          userName,
-          email,
-          password,
-          confirmPassword,
-        })
-        .then(() => {
-          console.log("posted");
-          navigate("/login");
-        })
-        .catch((error) => console.log(error));
->>>>>>> 6087d8cc1e8e209d9e77834e37db0d2cc1669e64
+      setIsloading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:3001/auth/register", {
+        userName,
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        setLocalStorageItems({
+          token: response.data.token,
+          email: response.data.email,
+          username: response.data.username,
+          bio : response.data.bio,
+          
+        });
+        navigate("/users/clientuser");
+      }
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        setMessage(err.response.data.error);
+      } else {
+        setMessage("Registration failed. Please try again.");
+      }
+    }finally{
+      setIsloading(false);
     }
   };
 
@@ -64,16 +67,8 @@ const Register = () => {
       <section id="main-page">
         <div id="left-container">
           <div className="top-section">
-            {/* <div className="div-img"></div> */}
-            <img src={signupImg} alt="" />
+            <img src={signupImg} alt="Sign Up" />
           </div>
-          {/* <div className="botton-section">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad,
-              explicabo. Loremmm ipsum dolor sit amet consectetur adipisicing
-              elit. Quod eligendi non
-            </p>
-          </div> */}
         </div>
         <div id="right-container" className="py-5">
           <div className="welcome-back">
@@ -101,7 +96,7 @@ const Register = () => {
               />
               <input
                 className="input-area"
-                type="text"
+                type="password"
                 placeholder="Password"
                 required
                 value={password}
@@ -109,23 +104,23 @@ const Register = () => {
               />
               <input
                 className="input-area"
-                type="text"
+                type="password"
                 placeholder="Confirm Password"
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <input className="submit-button" type="submit" value="Sign Up" />
-
               <div>
                 <Link to="/login" className="mr-5">
-                  LogIn
+                  Log In
                 </Link>
-                <Link to="">Forgot Password</Link>
+                <Link to="/forgot-password">Forgot Password</Link>
               </div>
             </form>
           </div>
         </div>
+        {IsLoading && <Spinner />}
       </section>
     </div>
   );
