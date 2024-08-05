@@ -79,4 +79,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+// delete user
+router.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await UserModel.findByIdAndDelete(id);
+  if (!user) {
+    return res.status(404).json({ message: "User Not Found" });
+  }
+  return res.status(200).json({ message: "User Deleted" });
+});
+
 module.exports = router;

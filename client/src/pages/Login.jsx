@@ -34,11 +34,10 @@ const Login = () => {
           token: response.data.token,
           email: response.data.email,
           username: response.data.username,
-          bio : response.data.bio,
-          profilePictureUrl : response.data.profilePictureUrl,
+          bio: response.data.bio,
+          profilePictureUrl: response.data.profilePictureUrl,
         });
         navigate("/users/clientuser");
-     
       }
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
@@ -46,7 +45,7 @@ const Login = () => {
       } else {
         setMessage("Login failed. Please try again.");
       }
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   };
@@ -57,10 +56,8 @@ const Login = () => {
         <section id="main-page">
           <div id="left-container">
             <div className="top-section">
-            
               <img src={loginImg} alt="" />
             </div>
-            
           </div>
           <div id="right-container" className="py-5">
             <div className="welcome-back">

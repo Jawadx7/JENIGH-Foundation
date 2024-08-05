@@ -11,7 +11,7 @@ const DonationsList = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:3001/donations")
+      .get("http://localhost:3001/donations/")
       .then((response) => {
         setDonations(response.data);
         setLoading(false);

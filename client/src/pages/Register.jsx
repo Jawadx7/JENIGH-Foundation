@@ -12,7 +12,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [IsLoading , setIsloading] = useState(false);
+  const [IsLoading, setIsloading] = useState(false);
   const navigate = useNavigate();
 
   const setLocalStorageItems = (items) => {
@@ -20,10 +20,9 @@ const Register = () => {
       localStorage.setItem(key, value);
     }
   };
-  
 
   const handleRegister = async (e) => {
-    setMessage('');
+    setMessage("");
     setIsloading(true);
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -44,8 +43,7 @@ const Register = () => {
           token: response.data.token,
           email: response.data.email,
           username: response.data.username,
-          bio : response.data.bio,
-          
+          bio: response.data.bio,
         });
         navigate("/users/clientuser");
       }
@@ -55,12 +53,10 @@ const Register = () => {
       } else {
         setMessage("Registration failed. Please try again.");
       }
-    }finally{
+    } finally {
       setIsloading(false);
     }
   };
-
-
 
   return (
     <div className="page_body">

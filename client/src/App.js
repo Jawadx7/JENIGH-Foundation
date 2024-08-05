@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/donations")
+      .get("http://localhost:3001/donations/")
       .then((res) => setDonations(res.data))
       .catch((error) => {
         console.log(error);
@@ -40,7 +40,7 @@ function App() {
         />
         <Route path="/users">
           <Route path="admin">
-            <Route index element={<Admin />} />
+            <Route index element={<Admin donations={donations} />} />
             <Route path="update/:id" element={<UpdateDonation />} />
             <Route
               path="donation/:id"

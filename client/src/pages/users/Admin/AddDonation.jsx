@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Spinner from "../../../components/Spinner";
 
-const AddDonation = () => {
+const AddDonation = ({ setActive }) => {
   const [name, setDonationName] = useState("");
   const [cause, setCause] = useState("");
   const [description, setDescription] = useState("");
@@ -11,11 +12,25 @@ const AddDonation = () => {
   const [closing, setClosing] = useState("");
   const [bannerImg, setBannerImg] = useState("");
 
-  const handleDonationSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  const clearForm = () => {
+    setDonationName("");
+    setCause("");
+    setDescription("");
+    setAmount("");
+    setRaised("");
+    setBeneficiaries("");
+    setClosing("");
+    setBannerImg("");
+  };
+
+  const handleDonationSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const beneficiariesList = beneficiaries.split(" ");
-    axios
-      .post("http://localhost:3001/donations/new", {
+    try {
+      const response = await axios.post("http://localhost:3001/donations/new", {
         name,
         cause,
         description,
@@ -24,11 +39,18 @@ const AddDonation = () => {
         beneficiaries: beneficiariesList,
         closing,
         bannerImg,
-      })
-      .then((response) => console.log(response))
-      .catch((error) => {
-        console.log(error);
       });
+
+      if (response.status === 200) {
+        alert("Donation added Successfully :) ...");
+        clearForm();
+        setActive("dashboard");
+      }
+    } catch (error) {
+      console.log("donation not sent", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -175,6 +197,8 @@ const AddDonation = () => {
       <button className="btn w-[60%] mx-auto text-center" type="submit">
         Submit Donation
       </button>
+
+      {loading && <Spinner />}
     </form>
   );
 };

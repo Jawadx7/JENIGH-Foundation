@@ -4,18 +4,21 @@ import "../../../asserts/css/admin.scss";
 import DonationsList from "./DonationsList";
 import UsersList from "./UsersList";
 import AddDonation from "./AddDonation";
-// http://localhost:3001/api/users/66a6c8aa018f1d693865e95c
+import Spinner from "../../../components/Spinner";
 
-const Admin = () => {
+const Admin = ({ donations }) => {
   const [active, setActive] = useState("dashboard");
   const [adminUsername, setAdminUsername] = useState("");
   const [adminpin, setAdminPin] = useState("");
   const [adminAccess, setAdminAccess] = useState("denied");
+  const [loading, setLoading] = useState(false);
 
   const AdminAccessCheck = (e) => {
+    setLoading(true);
     e.preventDefault();
     if (adminUsername === "jxd" && adminpin === "123") {
       setAdminAccess("allowes");
+      setLoading(false);
     } else {
       alert("Admin Page Access Denied");
     }
@@ -71,15 +74,16 @@ const Admin = () => {
           </div>
           <main>
             {active === "dashboard" ? (
-              <DonationsList />
+              <DonationsList donations={donations} />
             ) : active === "users" ? (
               <UsersList />
             ) : (
-              <AddDonation />
+              <AddDonation setActive={setActive} />
             )}
           </main>
         </div>
       )}
+      {loading && <Spinner />}
     </>
   );
 };

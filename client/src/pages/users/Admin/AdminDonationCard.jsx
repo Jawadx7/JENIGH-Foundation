@@ -18,9 +18,9 @@ const AdminDonationCard = ({ donation }) => {
       alert("you dont have permission to delete a Donation");
     } else {
       axios
-        .delete(`http://localhost:3001/api/donations/${donationId}`)
-        .then((result) => alert("Donation has been deleted successfully"))
-        .catch((error) => console.log(error));
+        .delete(`http://localhost:3001/donations/delete/${donationId}`)
+        .then(() => alert("Donation deleted succesfully"))
+        .catch((error) => console.log("donation not deleted", error));
     }
   };
 

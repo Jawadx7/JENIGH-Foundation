@@ -3,6 +3,7 @@ import "../App.css";
 import img from "../asserts/images/person_1.jpg";
 import HenryImg from "../asserts/images/Henry.jpg";
 import JawadImg from "../asserts/images/Jawad.jpeg";
+import JosephImg from "../asserts/images/Joseph.jpg";
 import aboutImg1 from "../asserts/images/about-img-1.jpg";
 import { Link } from "react-router-dom";
 import Footer from "../components/common/Footer";
@@ -141,7 +142,7 @@ const Home = ({ donations }) => {
                 <small>Frontend Developer</small>
               </div>
               <div className="member">
-                <img src={img} alt="" />
+                <img src={JosephImg} alt="" />
                 <div className="name">Naatey Joseph Angmor</div>
                 <small>Public Relations Officer</small>
               </div>

@@ -2,7 +2,7 @@ import "../../../asserts/css/client.scss";
 import ClientDonationsList from "./clientDonationsList";
 import profile from "../../../asserts/images/user.png";
 import "../../../App.css";
-import { useState  , useEffect} from "react";
+import { useState, useEffect } from "react";
 import UpdateInfoCard from "./UpdateInfoCard";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -10,23 +10,22 @@ import { useNavigate } from "react-router-dom";
 const ClientUser = () => {
   const [modalSate, setModalState] = useState("closed");
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [token, setToken] = useState('');
-  const [bio , setBio] = useState('');
-  const [url , setUrl]=useState(null);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
+  const [bio, setBio] = useState("");
+  const [url, setUrl] = useState(null);
 
   useEffect(() => {
     try {
-      const token = localStorage.getItem('token');
-      const username = localStorage.getItem('username');
-      const email = localStorage.getItem('email');
-      const bio = localStorage.getItem('bio') || '';
-      const Picture =  localStorage.getItem('profilePictureUrl') || profile;
-      
+      const token = localStorage.getItem("token");
+      const username = localStorage.getItem("username");
+      const email = localStorage.getItem("email");
+      const bio = localStorage.getItem("bio") || "";
+      const Picture = localStorage.getItem("profilePictureUrl") || profile;
 
       if (!token || !username || !email) {
-        navigate('/login');
+        navigate("/login");
         return;
       }
 
@@ -36,8 +35,7 @@ const ClientUser = () => {
       setBio(bio);
       setUrl(Picture);
     } catch (error) {
-     
-      navigate('/login');
+      navigate("/login");
     }
   }, [navigate]);
 
@@ -50,9 +48,8 @@ const ClientUser = () => {
   };
 
   const handleLogout = () => {
-   
     localStorage.clear();
-    navigate("/login"); 
+    navigate("/login");
   };
 
   return (
@@ -69,7 +66,6 @@ const ClientUser = () => {
             <h1>{username}</h1>
             <h3>{email}</h3>
             <p>{bio}</p>
-           
           </div>
 
           <div
