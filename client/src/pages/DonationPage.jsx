@@ -1,8 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import "../asserts/css/donations.scss";
-import img from "../asserts/images/cause.jpg";
-import { useEffect } from "react";
 
 const DonationPage = ({ donations }) => {
   const beneficiariesArray = [];
@@ -25,7 +23,7 @@ const DonationPage = ({ donations }) => {
         style={{
           width: "100%",
           height: "60vh",
-          background: `url(${img})`,
+          background: `url(${donationsItem.bannerImg})`,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
@@ -71,7 +69,7 @@ const DonationPage = ({ donations }) => {
               <h1>${donationsItem.amount}</h1>
             </div>
             <div>
-              {donationsItem.amount === donationsItem.raised ? (
+              {donationsItem.amount <= donationsItem.raised ? (
                 <h1 className="text-teal-500">Target Reached</h1>
               ) : (
                 <div className="flex align-center space-x-5">

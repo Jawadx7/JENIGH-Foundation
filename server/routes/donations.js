@@ -14,6 +14,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// get one donations
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const donation = await DonationModel.findById(id);
+    return res.status(200).send(donation);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
 // add new donation
 router.post("/new", async (req, res) => {
   try {

@@ -11,13 +11,25 @@ const UpdateDonation = () => {
   const [raised, setRaised] = useState(0);
   const [beneficiaries, setBeneficiaries] = useState([]);
   const [closing, setClosing] = useState("");
-  const [bannerImg, setBannerImg] = useState("");
+  const [bannerImg, setBannerImg] = useState(null);
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBannerImg(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/donations/${id}`)
+      .get(`http://localhost:3001/donations/${id}`)
       .then((response) => {
         setDonationName(response.data.name);
         setCause(response.data.cause);
@@ -26,7 +38,7 @@ const UpdateDonation = () => {
         setRaised(response.data.raised);
         setBeneficiaries(response.data.beneficiaries);
         // setClosing(response.data.closing);
-        // setBannerImg(response.data.bannerImg);
+        // setBannerImg(bannerImg);
       })
       .catch((error) => {
         console.log(error);
@@ -43,15 +55,15 @@ const UpdateDonation = () => {
       raised,
       beneficiaries,
       closing,
-      bannerImg,
+      bannerImg, // base64 image string
     };
     axios
-      .put(`http://localhost:3001/api/donations/update/${id}`, data)
+      .put(`http://localhost:3001/donations/update/${id}`, data)
       .then((results) => {
-        console.log(results);
+        // console.log(results);
         navigate("/users/admin");
       })
-      .catch((error) => console.log("cant update"));
+      .catch((error) => console.log("cant update", error));
   };
 
   return (
@@ -84,7 +96,7 @@ const UpdateDonation = () => {
               <span className="text-red-500">*</span>
             </div>
             <div className="flex align-center space-x-3">
-              <label htmlFor="campaignName">Seperate with space only</label>
+              <label htmlFor="campaignName">Seperate with comma</label>
               <span className="text-red-500">*</span>
             </div>
             <input
@@ -188,8 +200,8 @@ const UpdateDonation = () => {
             <input
               type="file"
               required
-              value={bannerImg}
-              onChange={(e) => setBannerImg(e.target.value)}
+              accept=".jpeg, .png, .jpg"
+              onChange={handleFileChange}
               className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
             />
           </div>

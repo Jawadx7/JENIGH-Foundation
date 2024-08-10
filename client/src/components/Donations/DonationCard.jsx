@@ -14,7 +14,7 @@ const DonationCard = ({ donation }) => {
     <div className="donate-card">
       <figure className="card-banner">
         <img
-          src={img}
+          src={donation.bannerImg}
           width="520"
           height="325"
           loading="lazy"
@@ -70,12 +70,20 @@ const DonationCard = ({ donation }) => {
           </p>
         </div>
 
-        <Link
-          to={`/donation/${donation._id}/#donation`}
-          className="btn btn-secondary"
-        >
-          <span>Learn More</span>
-        </Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <Link
+            to={`/donation/${donation._id}/#donation`}
+            className="btn btn-secondary"
+          >
+            <span>Learn More</span>
+          </Link>
+          <Link
+            to={`/makeDonation/${donation._id}`}
+            className="btn btn-secondary"
+          >
+            <span>Donate</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

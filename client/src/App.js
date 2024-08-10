@@ -11,6 +11,7 @@ import ClientUser from "./pages/users/ClientUser/ClientUser";
 import UpdateDonation from "./pages/users/Admin/UpdateDonation";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import MakeDonation from "./pages/MakeDonation";
 
 function App() {
   const [donations, setDonations] = useState([]);
@@ -38,6 +39,7 @@ function App() {
           path="/donation/:id"
           element={<DonationPage donations={donations} />}
         />
+        <Route path="/makeDonation/:id" element={<MakeDonation />} />
         <Route path="/users">
           <Route path="admin">
             <Route index element={<Admin donations={donations} />} />

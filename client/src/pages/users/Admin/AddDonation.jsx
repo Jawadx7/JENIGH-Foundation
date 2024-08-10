@@ -8,9 +8,9 @@ const AddDonation = ({ setActive }) => {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
   const [raised, setRaised] = useState(0);
-  const [beneficiaries, setBeneficiaries] = useState([]);
+  const [beneficiaries, setBeneficiaries] = useState("");
   const [closing, setClosing] = useState("");
-  const [bannerImg, setBannerImg] = useState("");
+  const [bannerImg, setBannerImg] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -18,27 +18,40 @@ const AddDonation = ({ setActive }) => {
     setDonationName("");
     setCause("");
     setDescription("");
-    setAmount("");
-    setRaised("");
+    setAmount(0);
+    setRaised(0);
     setBeneficiaries("");
     setClosing("");
-    setBannerImg("");
+    setBannerImg(null);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBannerImg(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleDonationSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const beneficiariesList = beneficiaries.split(" ");
+
+    const beneficiariesList = beneficiaries.trim().split(/\s+/);
+
     try {
       const response = await axios.post("http://localhost:3001/donations/new", {
         name,
         cause,
         description,
-        amount,
-        raised,
+        amount: parseFloat(amount),
+        raised: parseFloat(raised),
         beneficiaries: beneficiariesList,
         closing,
-        bannerImg,
+        bannerImg, // Base64 string
       });
 
       if (response.status === 200) {
@@ -47,7 +60,7 @@ const AddDonation = ({ setActive }) => {
         setActive("dashboard");
       }
     } catch (error) {
-      console.log("donation not sent", error);
+      console.log("Donation not sent", error);
     } finally {
       setLoading(false);
     }
@@ -78,17 +91,17 @@ const AddDonation = ({ setActive }) => {
         {/* input */}
         <div className="my-[1rem]">
           <div className="flex align-center space-x-3">
-            <label htmlFor="campaignName">Beneficiary(ies):</label>
+            <label htmlFor="beneficiaries">Beneficiary(ies):</label>
             <span className="text-red-500">*</span>
           </div>
           <div className="flex align-center space-x-3">
-            <label htmlFor="campaignName">Seperate with space only</label>
+            <label htmlFor="beneficiaries">Separate with comma</label>
             <span className="text-red-500">*</span>
           </div>
           <input
             type="text"
             required
-            placeholder="eg. Children Old disabled ..."
+            placeholder="e.g. Children Old disabled ..."
             value={beneficiaries}
             onChange={(e) => setBeneficiaries(e.target.value)}
             className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
@@ -99,13 +112,13 @@ const AddDonation = ({ setActive }) => {
         {/* input */}
         <div className="my-[1rem]">
           <div className="flex align-center space-x-3">
-            <label htmlFor="campaignName">Cause:</label>
+            <label htmlFor="cause">Cause:</label>
             <span className="text-red-500">*</span>
           </div>
           <input
             type="text"
             required
-            placeholder="eg. Education, Food Supply ..."
+            placeholder="e.g. Education, Food Supply ..."
             value={cause}
             onChange={(e) => setCause(e.target.value)}
             className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
@@ -116,11 +129,11 @@ const AddDonation = ({ setActive }) => {
         {/* text area */}
         <div>
           <div className="flex align-center space-x-3">
-            <label htmlFor="campaignName">Description: (0 / 500 words)</label>
+            <label htmlFor="description">Description: (0 / 500 words)</label>
             <span className="text-red-500">*</span>
           </div>
           <textarea
-            name="campaign_description"
+            name="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="mt-[1rem] bg-gray-200 outline-none p-[1rem] w-full h-[40rem]"
@@ -132,7 +145,7 @@ const AddDonation = ({ setActive }) => {
         {/* input */}
         <div className="my-[1rem]">
           <div className="flex align-center space-x-3">
-            <label htmlFor="campaignName">Target Amount ($):</label>
+            <label htmlFor="amount">Target Amount ($):</label>
             <span className="text-red-500">*</span>
           </div>
           <input
@@ -147,7 +160,7 @@ const AddDonation = ({ setActive }) => {
         {/* input */}
         <div className="my-[1rem]">
           <div className="flex align-center space-x-3">
-            <label htmlFor="campaignName">Amount Raised ($):</label>
+            <label htmlFor="raised">Amount Raised ($):</label>
             <span className="text-red-500">*</span>
           </div>
           <input
@@ -163,13 +176,12 @@ const AddDonation = ({ setActive }) => {
         {/* input */}
         <div className="my-[1rem]">
           <div className="flex align-center space-x-3">
-            <label htmlFor="campaignName">Closing Date</label>
+            <label htmlFor="closing">Closing Date:</label>
             <span className="text-red-500">*</span>
           </div>
           <input
             type="date"
             required
-            placeholder="eg. Education, Food Supply ..."
             value={closing}
             onChange={(e) => setClosing(e.target.value)}
             className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
@@ -180,14 +192,12 @@ const AddDonation = ({ setActive }) => {
         {/* input */}
         <div className="my-[1rem]">
           <div className="flex align-center space-x-3">
-            <label htmlFor="campaignName">Banner Image</label>
-            <span className="text-red-500">*</span>
+            <label htmlFor="bannerImg">Banner Image:</label>
           </div>
           <input
             type="file"
-            required
-            value={bannerImg}
-            onChange={(e) => setBannerImg(e.target.value)}
+            accept=".jpeg, .png, .jpg"
+            onChange={handleFileChange}
             className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
           />
         </div>

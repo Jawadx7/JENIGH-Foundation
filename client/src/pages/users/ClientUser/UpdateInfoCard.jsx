@@ -7,7 +7,7 @@ const UpdateInfoCard = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [userName, setUserName] = useState("");
   const [bio, setBio] = useState("");
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const [IsLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -19,62 +19,60 @@ const UpdateInfoCard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage('');
+    setMessage("");
 
-    if(!bio && !userName && !profilePicture){
-      setMessage('Cannot submit empty fields.');
+    if (!bio && !userName && !profilePicture) {
+      setMessage("Cannot submit empty fields.");
       return;
     }
 
     setIsLoading(true);
-   
 
-    
     const formData = new FormData();
-    formData.append('token' , token);
+    formData.append("token", token);
     if (profilePicture) formData.append("profilePicture", profilePicture);
     if (userName.trim()) formData.append("userName", userName);
     if (bio.trim()) formData.append("bio", bio);
 
     try {
-      const response = await axios.post("http://localhost:3001/users/updateProfile", formData, {
-        
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        "http://localhost:3001/users/updateProfile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
 
-      if(response.status === 200){
-        setBio('');
-        setUserName('');
+      if (response.status === 200) {
+        setBio("");
+        setUserName("");
         setProfilePicture(null);
 
         setLocalStorageItems({
           email: response.data.email,
           username: response.data.username,
-          bio : response.data.newBio,
-          profilePictureUrl : response.data.profilePictureUrl,
+          bio: response.data.newBio,
+          profilePictureUrl: response.data.profilePictureUrl,
         });
 
         window.location.reload();
-
       }
-
-      
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
         setMessage(err.response.data.error);
       } else {
         setMessage("Ooops. Please try again.");
       }
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-       <Message message={message} />
+      <Message message={message} />
       <div className="my-[1rem]">
         <div className="flex align-center space-x-3">
           <label htmlFor="profilePicture">Profile Picture</label>
