@@ -1,7 +1,11 @@
-import React from "react";
+import DonationCard from "../../../components/Donations/DonationCard";
 
-const ClientDonationsList = () => {
-  return <div>Client's Donations List</div>;
+const ClientDonationsList = ({ userDonations }) => {
+  return (
+    <div>
+      <DonationCard />
+    </div>
+  );
 };
 
 export default ClientDonationsList;

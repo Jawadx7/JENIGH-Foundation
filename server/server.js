@@ -73,6 +73,16 @@ app.use("/auth", AuthRoutes);
 app.use("/users", UsersRoutes);
 app.use("/donations", DonationsRoutes);
 
+let currentUser = "";
+
+app.post("/current", (req, res) => {
+  console.log(req.body);
+});
+
+// app.get("/currentUser", (req, res) => {
+//   res.status(200).json({ message: currentUser });
+// });
+
 http.createServer(app).listen(port, () => {
   console.log(`Server is running on localhost:${port}`);
 });

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import dummyPic from "../asserts/images/user.png";
 const UserCard = ({ user }) => {
   const handleUserDelete = () => {
     const donationId = user._id;
@@ -15,21 +16,21 @@ const UserCard = ({ user }) => {
     }
   };
 
-  let profilePath = "";
+  // let profilePath = "";
 
-  const getProfilepic = () => {
-    const filePath = user.profilePicture;
-    const correctFilePath = filePath.replace(/\\/g, "/");
-    profilePath = `../../../server/${correctFilePath}`;
-  };
-  getProfilepic();
+  // const getProfilepic = () => {
+  //   const filePath = user.profilePicture;
+  //   const correctFilePath = filePath.replace(/\\/g, "/");
+  //   profilePath = `../../../server/${correctFilePath}`;
+  // };
+  // getProfilepic();
 
   return (
     <div className="shadow-md p-[1.5rem] md:p-[2rem]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <figure>
           <img
-            src="../../../server/uploads/1722818487079.jpg"
+            src={dummyPic}
             alt=""
             className="w-[10rem] h-[10rem] rounded-full"
           />

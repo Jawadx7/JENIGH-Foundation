@@ -10,8 +10,23 @@ import Footer from "../components/common/Footer";
 import DonationCard from "../components/Donations/DonationCard";
 import logo from "../asserts/images/logo.png";
 import contactImg from "../asserts/images/about-img-3.jpg";
+import { useEffect, useState } from "react";
 
 const Home = ({ donations }) => {
+  const [userEmail, setUserEmail] = useState("");
+  const [userPic, setUserPic] = useState("");
+  useEffect(() => {
+    try {
+      const email = localStorage.getItem("email");
+      fetch(`http://localhost:3001/users/user/${email}`)
+        .then((res) => res.json())
+        .then((data) => setUserPic(data.profilePicture));
+      setUserEmail(email);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   return (
     <>
       {/* Navbar  */}
@@ -34,9 +49,20 @@ const Home = ({ donations }) => {
           </a>
         </ul>
 
-        <Link to={"/login"} className="btn btn_primary">
-          sign in
-        </Link>
+        <div>
+          {userEmail ? (
+            <Link to="/users/clientUser">
+              <img
+                src={userPic}
+                className="w-24 h-24 bg-primary_green rounded-full"
+              />
+            </Link>
+          ) : (
+            <Link to={"/login"} className="btn btn_primary">
+              sign in
+            </Link>
+          )}
+        </div>
 
         {/* <div>
           {User ? (

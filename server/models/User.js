@@ -4,16 +4,16 @@ const UserSchema = new mongoose.Schema(
   {
     userName: {
       type: String,
-      required: [true, 'Username cannot be blank'],
+      required: [true, "Username cannot be blank"],
     },
     email: {
       type: String,
-      required: [true, 'Email cannot be blank'],
+      required: [true, "Email cannot be blank"],
       unique: true,
     },
     password: {
       type: String,
-      required: [true, 'Password cannot be blank'],
+      required: [true, "Password cannot be blank"],
     },
     bio: {
       type: String,
@@ -21,12 +21,11 @@ const UserSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
     },
+    donations: [],
   },
   { timestamps: true }
 );
 
-
-const UserModel = mongoose.model('User', UserSchema);
-
+const UserModel = mongoose.model("User", UserSchema);
 
 module.exports = UserModel;

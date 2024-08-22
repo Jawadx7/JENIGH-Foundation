@@ -1,11 +1,13 @@
 import "../../../asserts/css/client.scss";
-import ClientDonationsList from "./clientDonationsList";
+// import ClientDonationsList from "./clientDonationsList";
+import DonationCard from "../../../components/Donations/DonationCard";
 import profile from "../../../asserts/images/user.png";
 import "../../../App.css";
 import { useState, useEffect } from "react";
 import UpdateInfoCard from "./UpdateInfoCard";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ClientUser = () => {
   const [modalSate, setModalState] = useState("closed");
@@ -15,6 +17,30 @@ const ClientUser = () => {
   const [token, setToken] = useState("");
   const [bio, setBio] = useState("");
   const [url, setUrl] = useState(null);
+  const [userDonations, setUserDonations] = useState([]);
+
+  const getUserDonations = async (user_email) => {
+    // console.log(user_email);
+
+    try {
+      fetch(`http://localhost:3001/users/${user_email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setUserDonations(data.donations);
+        });
+      // console.log(user_email);
+
+      // const response = await axios.post("http://localhost:3001/current", {
+      //   user_email,
+      // });
+
+      // if (response.status === 200) {
+      //   alert("current user sent Successfully :) ...");
+      // }
+    } catch (error) {
+      console.log("current user not sent", error);
+    }
+  };
 
   useEffect(() => {
     try {
@@ -34,6 +60,8 @@ const ClientUser = () => {
       setToken(token);
       setBio(bio);
       setUrl(Picture);
+
+      getUserDonations(email);
     } catch (error) {
       navigate("/login");
     }
@@ -96,7 +124,14 @@ const ClientUser = () => {
             You have made a total donation of <span>$ 125,000.90</span>
           </h1>
 
-          <ClientDonationsList />
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {userDonations.map((donation) => (
+              <DonationCard donation={donation} />
+            ))}
+            {/* <li>hello</li> */}
+          </ul>
+
+          {/* <ClientDonationsList userDonations={userDonations} /> */}
         </main>
       </div>
 

@@ -40,7 +40,7 @@ router.post("/new", async (req, res) => {
   }
 });
 
-// // update donation
+// update donation
 router.put("/update/:id", async (req, res) => {
   try {
     const { id } = req.params;

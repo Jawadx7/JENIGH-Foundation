@@ -19,7 +19,10 @@ const AdminDonationCard = ({ donation }) => {
     } else {
       axios
         .delete(`http://localhost:3001/donations/delete/${donationId}`)
-        .then(() => alert("Donation deleted succesfully"))
+        .then(() => {
+          alert("Donation deleted succesfully");
+          window.location.reload();
+        })
         .catch((error) => console.log("donation not deleted", error));
     }
   };

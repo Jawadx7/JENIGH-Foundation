@@ -4,7 +4,7 @@ import Spinner from "../../../components/Spinner";
 import Message from "../../../components/Message";
 
 const UpdateInfoCard = () => {
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState("");
   const [userName, setUserName] = useState("");
   const [bio, setBio] = useState("");
   const token = localStorage.getItem("token");
@@ -16,6 +16,17 @@ const UpdateInfoCard = () => {
       localStorage.setItem(key, value);
     }
   };
+
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setProfilePicture(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,8 +46,13 @@ const UpdateInfoCard = () => {
     if (bio.trim()) formData.append("bio", bio);
 
     try {
+      console.log(userName);
+      console.log(bio);
+      console.log(profilePicture);
+
       const response = await axios.post(
         "http://localhost:3001/users/updateProfile",
+        // { userName, bio, profilePicture },
         formData,
         {
           headers: {
@@ -48,7 +64,7 @@ const UpdateInfoCard = () => {
       if (response.status === 200) {
         setBio("");
         setUserName("");
-        setProfilePicture(null);
+        setProfilePicture("");
 
         setLocalStorageItems({
           email: response.data.email,
@@ -79,8 +95,10 @@ const UpdateInfoCard = () => {
         </div>
         <input
           type="file"
-          className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
+          accept=".jpeg, .png, .jpg"
+          // onChange={handleFileChange}
           onChange={(e) => setProfilePicture(e.target.files[0])}
+          className="mt-[1rem] bg-gray-200 outline-none p-[1rem]"
         />
       </div>
 
