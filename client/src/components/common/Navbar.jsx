@@ -10,9 +10,9 @@ const Navbar = () => {
   useEffect(() => {
     try {
       const email = localStorage.getItem("email");
-      fetch(`http://localhost:3001/users/user/${email}`)
-        .then((res) => res.json())
-        .then((data) => setUserPic(data.profilePicture));
+      // fetch(`http://localhost:3001/users/user/${email}`)
+      //   .then((res) => res.json())
+      //   .then((data) => setUserPic(data.profilePicture));
       setUserEmail(email);
     } catch (error) {
       console.log(error);
@@ -26,9 +26,9 @@ const Navbar = () => {
         <Link to="/" className="link text-black hover:text-gray-500">
           Home
         </Link>
-        <Link to="/donations" className="link text-black hover:text-gray-500">
+        {/* <Link to="/donations" className="link text-black hover:text-gray-500">
           Donations
-        </Link>
+        </Link> */}
       </ul>
 
       <div>
@@ -36,7 +36,7 @@ const Navbar = () => {
           <Link to="/users/clientUser">
             <img
               src={userPic}
-              className="w-24 h-24 bg-primary_green rounded-full"
+              className="w-16 h-16 sm:w-24 sm:h-24 bg-primary_green rounded-full"
             />
           </Link>
         ) : (
@@ -45,22 +45,6 @@ const Navbar = () => {
           </Link>
         )}
       </div>
-
-      {/* <div>
-        {User ? (
-          <Link to="/users/clientuser">
-            <img
-              src={img}
-              alt="profile"
-              className="w-[5rem] h-[5rem] rounded-full"
-            />
-          </Link>
-        ) : (
-          <Link to={"/login"} className="btn btn_primary">
-            sign in
-          </Link>
-        )}
-      </div> */}
     </header>
   );
 };

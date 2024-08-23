@@ -31,24 +31,6 @@
       left: 0;
       width: 100%;
       height: fit-content;
-
-      #sidebarComponent {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        ul {
-          width: 50%;
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          align-items: center;
-          gap: 1rem;
-
-          li {
-            border-left: none;
-          }
-        }
-      }
     }
 
     main {
@@ -71,12 +53,12 @@
 
     .sidebar {
       flex-direction: column;
-      #sidebarComponent {
-        flex-direction: column;
-        ul {
-          width: 100%;
-        }
-      }
+      // #sidebarComponent {
+      //   flex-direction: column;
+      //   ul {
+      //     width: 100%;
+      //   }
+      // }
     }
   }
 }

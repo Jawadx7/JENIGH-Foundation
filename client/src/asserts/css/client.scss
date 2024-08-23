@@ -8,7 +8,6 @@
 
   .sidebar {
     padding: 2rem;
-    flex: 1;
     background: var(--dark);
     height: 100vh;
 
@@ -34,6 +33,38 @@
 
       span {
         font-size: 3rem;
+      }
+    }
+  }
+
+  @media screen and (width <= 900px) {
+    main {
+      // padding-top: 5rem;
+      position: relative;
+
+      h2 {
+        margin-top: 5rem;
+      }
+
+      .top {
+        height: 6rem;
+        position: fixed;
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr 1fr 1fr;
+        top: -3rem;
+        right: 0;
+        background: var(--dark);
+        width: 100%;
+        z-index: 1;
+
+        #link {
+          height: 100%;
+          // background: red;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     }
   }

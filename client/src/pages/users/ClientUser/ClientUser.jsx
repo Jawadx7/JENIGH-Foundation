@@ -1,5 +1,4 @@
 import "../../../asserts/css/client.scss";
-// import ClientDonationsList from "./clientDonationsList";
 import DonationCard from "../../../components/Donations/DonationCard";
 import profile from "../../../asserts/images/user.png";
 import "../../../App.css";
@@ -10,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ClientUser = () => {
-  const [modalSate, setModalState] = useState("closed");
+  const [modalState, setModalState] = useState("closed");
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -18,27 +17,31 @@ const ClientUser = () => {
   const [bio, setBio] = useState("");
   const [url, setUrl] = useState(null);
   const [userDonations, setUserDonations] = useState([]);
+  const [allDonations, setAllDonations] = useState([]);
+  const [commonDonations, setCommonDonations] = useState([]);
+
+  const [navStatus, setNavStatus] = useState("closed");
 
   const getUserDonations = async (user_email) => {
-    // console.log(user_email);
-
     try {
-      fetch(`http://localhost:3001/users/${user_email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setUserDonations(data.donations);
-        });
-      // console.log(user_email);
+      const userResponse = await fetch(
+        `http://localhost:3001/users/${user_email}`
+      );
+      const userData = await userResponse.json();
+      setUserDonations(userData.donations);
 
-      // const response = await axios.post("http://localhost:3001/current", {
-      //   user_email,
-      // });
+      const donationsResponse = await axios.get(
+        "http://localhost:3001/donations/"
+      );
+      setAllDonations(donationsResponse.data);
 
-      // if (response.status === 200) {
-      //   alert("current user sent Successfully :) ...");
-      // }
+      // getting common donations
+      const commonDonations = donationsResponse.data.filter((donation) =>
+        userData.donations.includes(donation._id)
+      );
+      setCommonDonations(commonDonations);
     } catch (error) {
-      console.log("current user not sent", error);
+      console.log("Error fetching data", error);
     }
   };
 
@@ -83,7 +86,52 @@ const ClientUser = () => {
   return (
     <>
       <div className="clientPage relative">
-        <div className="sidebar relative">
+        <div className="hidden md:block sidebar md:w-auto transition-smooth flex-[1]">
+          <span
+            className="block md:hidden text-white text-[5rem] font-bold absolute top-5 right-10 hover:text-red-400"
+            onClick={() => setNavStatus("closed")}
+          >
+            &times;
+          </span>
+          <img
+            src={url}
+            alt="profile pic"
+            className="w-[50%] mx-auto rounded-full"
+          />
+
+          <div className="userInfo my-[1.5rem]">
+            <h1>{username}</h1>
+            <h3>{email}</h3>
+            <p>{bio}</p>
+          </div>
+
+          <div
+            className="btn my-5 w-fit text-center mx-auto cursor-pointer"
+            onClick={openModal}
+          >
+            Update Info
+          </div>
+
+          <div
+            className="btn my-5 text-center absolute bottom-0 left-0 cursor-pointer"
+            onClick={handleLogout}
+          >
+            Log Out
+          </div>
+        </div>
+
+        {/* small screen menu slider */}
+        <div
+          className={`block md:hidden sidebar w-[80%] md:w-auto transition-smooth fixed top-0 z-10 ${
+            navStatus === "closed" ? "left-[-100%]" : "left-0"
+          }`}
+        >
+          <span
+            className="block cursor-pointer md:hidden text-white text-[5rem] font-bold absolute top-5 right-10 hover:text-red-400"
+            onClick={() => setNavStatus("closed")}
+          >
+            &times;
+          </span>
           <img
             src={url}
             alt="profile pic"
@@ -112,31 +160,62 @@ const ClientUser = () => {
         </div>
 
         <main className="relative">
-          <div className="flex align-center flex-col space-x-3 my-[3rem] absolute top-0 right-[1rem]">
-            <Link to="/donations" className="text-teal-500 hover:text-teal-600">
-              ~~ Donations List
+          <div className="top flex align-center flex-col space-x-3 my-[3rem] absolute top-0 right-[1rem]">
+            <span
+              className="text-white px-3 text-5xl cursor-pointer"
+              onClick={() => setNavStatus("opened")}
+            >
+              &#9776;
+            </span>
+            <Link
+              id="link"
+              to="/donations"
+              className="text-teal-500 hover:text-teal-600"
+            >
+              ~~ Donations
             </Link>
-            <Link to="/" className="text-teal-500 hover:text-teal-600">
+            <Link
+              id="link"
+              to="/"
+              className="text-teal-500 hover:text-teal-600"
+            >
               ~~ Home
             </Link>
           </div>
-          <h1>
-            You have made a total donation of <span>$ 125,000.90</span>
-          </h1>
+          <div>
+            {/* <h1>
+              You have made a total donation of <span>$ 125,000.90</span>
+            </h1> */}
 
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {userDonations.map((donation) => (
-              <DonationCard donation={donation} />
-            ))}
-            {/* <li>hello</li> */}
-          </ul>
-
-          {/* <ClientDonationsList userDonations={userDonations} /> */}
+            <div>
+              {commonDonations.length ? (
+                <div>
+                  <h2 className="text-[2rem] font-bold mb-5">
+                    Donations You have Contributed To:
+                  </h2>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {commonDonations.map((donation) => (
+                      <DonationCard key={donation._id} donation={donation} />
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <div>
+                  <h2 className="text-[3rem] mt-5">
+                    You have not made any donations yet.
+                  </h2>
+                  <h2 className="text-[3rem] mt-5">
+                    Checkout Our Donations List
+                  </h2>
+                </div>
+              )}
+            </div>
+          </div>
         </main>
       </div>
 
       <div
-        className={`modal absolute transform-center w-full h-[100vh] ${modalSate} flex align-center justify-center shadow-bg`}
+        className={`modal z-20 absolute transform-center w-full h-[100vh] ${modalState} flex align-center justify-center shadow-bg`}
       >
         <div className="closebtn" onClick={closeModal}>
           &times;

@@ -55,6 +55,7 @@
 
       &:hover {
         border-color: var(--my-secondary);
+        color: white;
       }
 
       .icon {
@@ -107,6 +108,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+
+    img {
+      width: 100%;
+    }
   }
 
   .about_text {
@@ -195,10 +200,10 @@
 
     .members_container {
       .row {
-        display: flex;
+        display: grid;
         align-items: center;
-        justify-content: center;
-        gap: 7rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
         margin: 4rem 0;
       }
 
@@ -232,7 +237,9 @@
     .container {
       .members_container {
         .row {
-          flex-wrap: wrap;
+          // flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
         }
       }
 

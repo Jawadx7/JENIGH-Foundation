@@ -4,7 +4,7 @@ import "../../../asserts/css/admin.scss";
 import DonationsList from "./DonationsList";
 import UsersList from "./UsersList";
 import AddDonation from "./AddDonation";
-import Spinner from "../../../components/Spinner";
+// import Spinner from "../../../components/Spinner";
 
 const Admin = ({ donations }) => {
   const [active, setActive] = useState("dashboard");

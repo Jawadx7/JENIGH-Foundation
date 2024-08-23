@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import Message from "../components/Message";
 import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 import { PaystackButton } from "react-paystack";
 
@@ -86,7 +87,9 @@ const MakeDonation = () => {
         })
         .then(() => {
           // console.log(results);
-          userDonations.push(donation);
+          if (!userDonations.includes(donation._id)) {
+            userDonations.push(donation._id);
+          }
           updateUserDonations();
           window.location.reload();
         })
@@ -138,6 +141,13 @@ const MakeDonation = () => {
               </div>
             )}
           </div>
+          <Link
+            to="/donations"
+            className="btn mt-3 w-fit mx-auto text-center"
+            type="submit"
+          >
+            Back to Donations
+          </Link>
         </div>
         <form onSubmit={handleMakeDonation}>
           <h1 className="text-[3rem] font-[600] text-center">

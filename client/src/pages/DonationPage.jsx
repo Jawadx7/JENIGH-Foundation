@@ -33,10 +33,19 @@ const DonationPage = ({ donations }) => {
       ></div>
 
       <div className="donationContent px-[5%]">
-        <div className="flex align-center space-x-3 my-[3rem]">
-          <p>~~</p>
-          <Link to="/donations" className="text-teal-500 hover:text-teal-600">
-            Back to Donations List
+        <div className="flex-col sm:flex-row flex align-center justify-between">
+          <div className="flex align-center space-x-3 my-[3rem]">
+            <p>~~</p>
+            <Link to="/donations" className="text-teal-500 hover:text-teal-600">
+              Back to Donations List
+            </Link>
+          </div>
+
+          <Link
+            to={`/makeDonation/${donationsItem._id}`}
+            className="btn btn-secondary w-fit my-3"
+          >
+            <span>Make Donation</span>
           </Link>
         </div>
 

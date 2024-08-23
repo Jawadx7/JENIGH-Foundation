@@ -1,26 +1,32 @@
 import "../asserts/css/home.scss";
 import "../App.css";
-import img from "../asserts/images/person_1.jpg";
+import MrQuayson from "../asserts/images/Mr-Quayson.jpeg";
 import HenryImg from "../asserts/images/Henry.jpg";
 import JawadImg from "../asserts/images/Jawad.jpeg";
 import JosephImg from "../asserts/images/Joseph.jpg";
-import aboutImg1 from "../asserts/images/about-img-1.jpg";
+import Omah from "../asserts/images/omah.jpg";
+import img from "../asserts/images/user.png";
+import aboutImg1 from "../asserts/images/about-img-1.jpeg";
+import aboutImg2 from "../asserts/images/about-img-2.jpeg";
+import aboutImg3 from "../asserts/images/about-img-3.jpeg";
+import aboutImg4 from "../asserts/images/about-img-4.jpg";
 import { Link } from "react-router-dom";
 import Footer from "../components/common/Footer";
 import DonationCard from "../components/Donations/DonationCard";
 import logo from "../asserts/images/logo.png";
-import contactImg from "../asserts/images/about-img-3.jpg";
+import contactImg from "../asserts/images/about-img-4.jpg";
 import { useEffect, useState } from "react";
 
 const Home = ({ donations }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPic, setUserPic] = useState("");
+  const [navStatus, setNavStatus] = useState("closed");
   useEffect(() => {
     try {
       const email = localStorage.getItem("email");
-      fetch(`http://localhost:3001/users/user/${email}`)
-        .then((res) => res.json())
-        .then((data) => setUserPic(data.profilePicture));
+      // fetch(`http://localhost:3001/users/user/${email}`)
+      //   .then((res) => res.json())
+      //   .then((data) => setUserPic(data.profilePicture));
       setUserEmail(email);
     } catch (error) {
       console.log(error);
@@ -32,9 +38,41 @@ const Home = ({ donations }) => {
       {/* Navbar  */}
 
       <header className="bg-white shadow-md flex align-center justify-between py-[1rem] px-[5%] fixed top-0 w-full left-0 z-20">
-        <img src={logo} alt="logo" className="w-[6rem]" />
+        <span
+          className="block sm:hidden text-4xl cursor-pointer"
+          onClick={() => setNavStatus("opened")}
+        >
+          &#9776;
+        </span>
+        <img src={logo} alt="logo" className="w-[4.5rem] sm:w-[6rem]" />
 
-        <ul className="flex align-center space-x-5">
+        <ul className="hidden sm:flex align-center space-x-5">
+          <a href="/#home" className="link text-black hover:text-gray-500">
+            Home
+          </a>
+          <a href="#about" className="link text-black hover:text-gray-500">
+            About
+          </a>
+          <a href="#donations" className="link text-black hover:text-gray-500">
+            Donations
+          </a>
+          <a href="#contact" className="link text-black hover:text-gray-500">
+            Contact
+          </a>
+        </ul>
+
+        {/* small screen nav slider menu */}
+        <ul
+          className={`fixed transition-smooth sm:hidden top-0 ${
+            navStatus === "closed" ? "left-[-100%]" : "left-0"
+          } w-[80%] h-[100vh] bg-white z-10 shadow-md flex flex-col space-y-10 p-[5rem]`}
+        >
+          <span
+            className="absolute top-5 right-10 hover:text-red-500 text-[5rem]"
+            onClick={() => setNavStatus("closed")}
+          >
+            &times;
+          </span>
           <a href="/#home" className="link text-black hover:text-gray-500">
             Home
           </a>
@@ -63,22 +101,6 @@ const Home = ({ donations }) => {
             </Link>
           )}
         </div>
-
-        {/* <div>
-          {User ? (
-            <Link to="/users/clientuser">
-              <img
-                src={img}
-                alt="profile"
-                className="w-[5rem] h-[5rem] rounded-full"
-              />
-            </Link>
-          ) : (
-            <Link to={"/login"} className="btn btn_primary">
-              sign in
-            </Link>
-          )}
-        </div> */}
       </header>
 
       <div className="hero" id="home">
@@ -93,34 +115,34 @@ const Home = ({ donations }) => {
         <div className="values">
           <div className="value_box">
             <div className="icon">&#9776;</div>
-            <h3>Save the world</h3>
+            <h3>Empower Communities</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab,
-              reprehenderit?
+              Empowering individuals through education, resources, and support
+              to build self-sufficient communities.
             </p>
           </div>
           <div className="value_box">
             <div className="icon">&#9776;</div>
-            <h3>Save the world</h3>
+            <h3>Support Sustainable Change</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab,
-              reprehenderit?
+              Fostering long-term development projects that create lasting
+              impacts and improve lives for future generations.
             </p>
           </div>
           <div className="value_box">
             <div className="icon">&#9776;</div>
-            <h3>Save the world</h3>
+            <h3>Provide Lifesaving Aid</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab,
-              reprehenderit?
+              Delivering critical assistance to those in need, ensuring access
+              to essentials like food, water, and healthcare.
             </p>
           </div>
           <div className="value_box">
             <div className="icon">&#9776;</div>
-            <h3>Save the world</h3>
+            <h3>Inspire Global Action</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab,
-              reprehenderit?
+              Encouraging collective efforts to address global challenges,
+              promoting unity, and driving meaningful change worldwide.
             </p>
           </div>
         </div>
@@ -129,9 +151,9 @@ const Home = ({ donations }) => {
       <section className="about" id="about">
         <div className="images">
           <img src={aboutImg1} alt="" />
-          <img src={aboutImg1} alt="" />
-          <img src={aboutImg1} alt="" />
-          <img src={aboutImg1} alt="" />
+          <img src={aboutImg2} alt="" />
+          <img src={aboutImg3} alt="" />
+          <img src={aboutImg4} alt="" />
         </div>
 
         <div className="about_text">
@@ -139,10 +161,24 @@ const Home = ({ donations }) => {
           <h1>The Poor Around The World</h1>
 
           <p className="mt-[2rem]">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero ipsa,
-            et nam optio quibusdam error nesciunt, veniam iure possimus dolor
-            aperiam fugit autem sapiente natus doloremque illum porro eaque
-            magni.
+            At JENINIGH Foundation, we are dedicated to making a positive impact
+            in the world. Our mission is to empower communities, drive
+            meaningful change, and create opportunities for those in need. With
+            a focus on compassion and innovation, we strive to address the
+            challenges faced by the most vulnerable, offering support and
+            resources to build brighter futures.
+          </p>
+
+          <p className="mt-[2rem]">
+            We believe in the power of collective action and the difference a
+            single act of kindness can make. Through our efforts, we aim to
+            inspire hope, foster growth, and contribute to a more just and
+            equitable society.
+          </p>
+
+          <p className="mt-[2rem]">
+            Join us on this journey as we work together to create lasting
+            change.
           </p>
         </div>
       </section>
@@ -172,12 +208,11 @@ const Home = ({ donations }) => {
                 <div className="name">Naatey Joseph Angmor</div>
                 <small>Public Relations Officer</small>
               </div>
-            </div>
-            <div className="row">
+
               <div className="member">
-                <img src={img} alt="" />
+                <img src={Omah} alt="" />
                 <div className="name">Effah Clement Poku</div>
-                <small>Information</small>
+                <small>Advisor</small>
               </div>
               <div className="member">
                 <img src={HenryImg} alt="" />
@@ -194,14 +229,28 @@ const Home = ({ donations }) => {
 
           <div className="managers_container">
             <div className="manager_card">
-              <img src={img} alt="" />
-              <div className="name">Mr. Emmanuel Quayson</div>
-              <p>Supervisor</p>
+              <img src={MrQuayson} alt="" />
+              <div className="name">Mr. Ebenezer Quayson</div>
+              <p>Lecturer/Supervisor</p>
+              <a
+                target="_blank"
+                href="https://uenr.edu.gh/staff/ebenezer-quayson/"
+                className="text-primary_green underline"
+              >
+                Learn More
+              </a>
             </div>
             <div className="manager_card">
               <img src={img} alt="" />
-              <div className="name">Dr. Eugene Angelina Smith</div>
+              <div className="name">Eugene Smith</div>
               <p>Assistant Supervisor</p>
+              <a
+                // target="_blank"
+                href=""
+                className="text-primary_green underline"
+              >
+                Learn More
+              </a>
             </div>
           </div>
         </div>
