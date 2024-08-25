@@ -68,6 +68,10 @@ mongoose
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.get("/", (req, res) => {
+  res.send("Welcome to JENIGH Backend Server");
+});
+
 // Routes
 app.use("/auth", AuthRoutes);
 app.use("/users", UsersRoutes);
@@ -78,10 +82,6 @@ let currentUser = "";
 app.post("/current", (req, res) => {
   console.log(req.body);
 });
-
-// app.get("/currentUser", (req, res) => {
-//   res.status(200).json({ message: currentUser });
-// });
 
 http.createServer(app).listen(port, () => {
   console.log(`Server is running on localhost:${port}`);

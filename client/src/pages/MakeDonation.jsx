@@ -95,7 +95,6 @@ const MakeDonation = () => {
         })
         .catch((error) => console.log("cant update", error));
       setMessage("");
-      // console.log(donationAmount, network);
       setLoading(false);
     }
   };
