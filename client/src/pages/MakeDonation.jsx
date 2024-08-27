@@ -41,6 +41,21 @@ const MakeDonation = () => {
       });
   }, []);
 
+  useEffect(() => {
+    try {
+      const token = localStorage.getItem("token");
+      const username = localStorage.getItem("username");
+      const email = localStorage.getItem("email");
+
+      if (!token || !username || !email) {
+        navigate("/login");
+        return;
+      }
+    } catch (error) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   const updateUserDonations = () => {
     console.log(userDonations);
     axios

@@ -5,7 +5,8 @@ import HenryImg from "../asserts/images/Henry.jpg";
 import JawadImg from "../asserts/images/Jawad.jpeg";
 import JosephImg from "../asserts/images/Joseph.jpg";
 import Omah from "../asserts/images/omah.jpg";
-import img from "../asserts/images/user.png";
+import Hill from "../asserts/images/hill.jpg";
+import Mohammed from "../asserts/images/Mohammed.jpg";
 import aboutImg1 from "../asserts/images/about-img-1.jpeg";
 import aboutImg2 from "../asserts/images/about-img-2.jpeg";
 import aboutImg3 from "../asserts/images/about-img-3.jpeg";
@@ -199,7 +200,7 @@ const Home = ({ donations }) => {
                 <small>Project Manager</small>
               </div>
               <div className="member">
-                <img src={img} alt="" />
+                <img src={Hill} alt="" />
                 <div className="name">Gyamfi Jonathan Douglas</div>
                 <small>Frontend Developer</small>
               </div>
@@ -220,7 +221,7 @@ const Home = ({ donations }) => {
                 <small>Database Manager</small>
               </div>
               <div className="member">
-                <img src={img} alt="" />
+                <img src={Mohammed} alt="" />
                 <div className="name">Mohammed Iddriss Adam</div>
                 <small>Designer and Illustrator</small>
               </div>
@@ -240,7 +241,7 @@ const Home = ({ donations }) => {
                 Learn More
               </a>
             </div>
-            <div className="manager_card">
+            {/* <div className="manager_card">
               <img src={img} alt="" />
               <div className="name">Eugene Smith</div>
               <p>Assistant Supervisor</p>
@@ -251,12 +252,15 @@ const Home = ({ donations }) => {
               >
                 Learn More
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
 
       {/* Donations List */}
+      <h2 className="text-center text-[3rem]">
+        Available Doantion <strong>Campaigns</strong>
+      </h2>
       <section id="donations">
         {donations.length ? (
           <div>
