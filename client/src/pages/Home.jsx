@@ -207,7 +207,7 @@ const Home = ({ donations }) => {
               <div className="member">
                 <img src={JosephImg} alt="" />
                 <div className="name">Naatey Joseph Angmor</div>
-                <small>Public Relations Officer</small>
+                <small>Database Manager</small>
               </div>
 
               <div className="member">
@@ -218,7 +218,7 @@ const Home = ({ donations }) => {
               <div className="member">
                 <img src={HenryImg} alt="" />
                 <div className="name">Boakye Henry</div>
-                <small>Database Manager</small>
+                <small>P.R.O</small>
               </div>
               <div className="member">
                 <img src={Mohammed} alt="" />
