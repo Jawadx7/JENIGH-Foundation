@@ -6,6 +6,7 @@ import JawadImg from "../asserts/images/Jawad.jpeg";
 import JosephImg from "../asserts/images/Joseph.jpg";
 import Omah from "../asserts/images/omah.jpg";
 import Hill from "../asserts/images/hill.jpg";
+import profile from "../asserts/images/user.png";
 import Mohammed from "../asserts/images/Mohammed.jpg";
 import aboutImg1 from "../asserts/images/about-img-1.jpeg";
 import aboutImg2 from "../asserts/images/about-img-2.jpeg";
@@ -22,6 +23,7 @@ const Home = ({ donations }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPic, setUserPic] = useState("");
   const [navStatus, setNavStatus] = useState("closed");
+  const [url, setUrl] = useState(null);
   useEffect(() => {
     try {
       const email = localStorage.getItem("email");
@@ -29,6 +31,8 @@ const Home = ({ donations }) => {
       //   .then((res) => res.json())
       //   .then((data) => setUserPic(data.profilePicture));
       setUserEmail(email);
+      const Picture = localStorage.getItem("profilePictureUrl") || profile;
+      setUrl(Picture);
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +96,7 @@ const Home = ({ donations }) => {
           {userEmail ? (
             <Link to="/users/clientUser">
               <img
-                src={userPic}
+                src={url}
                 className="w-24 h-24 bg-primary_green rounded-full"
               />
             </Link>

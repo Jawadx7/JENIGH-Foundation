@@ -123,4 +123,24 @@ router.put("/updateDonations/:email", async (req, res) => {
   }
 });
 
+// update user Total Donation Amount
+router.put("/updateTotalDonationAmount/:email", async (req, res) => {
+  const { email } = req.params;
+  const { totalAmountDonated } = req.body;
+  try {
+    console.log(totalAmountDonated, email);
+    const result = await UserModel.findOneAndUpdate(
+      { email: email }, // Find the document by email
+      { $inc: { totalAmountDonated: totalAmountDonated } },
+      { new: true }
+    );
+    res.status(200).json({
+      message: "User's Total Amount Donated updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

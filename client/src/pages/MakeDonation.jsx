@@ -6,7 +6,7 @@ import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
-import { PaystackButton } from "react-paystack";
+// import { PaystackButton } from "react-paystack";
 
 const MakeDonation = () => {
   const { id } = useParams();
@@ -14,13 +14,12 @@ const MakeDonation = () => {
   const [donation, setDonation] = useState({});
   const [donationAmount, setDonationAmount] = useState(0);
   const [phone, setPhone] = useState("");
-  const [network, setNetwork] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [userDonations, setUserDonations] = useState([]);
 
-  const publicKey = "pk_test_a43d8a6be2f829f2a615d3937fbdabf960c205da";
+  // const publicKey = "pk_test_a43d8a6be2f829f2a615d3937fbdabf960c205da";
   const email = localStorage.getItem("email");
 
   useEffect(() => {
@@ -39,7 +38,7 @@ const MakeDonation = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [email, id]);
 
   useEffect(() => {
     try {
@@ -56,11 +55,23 @@ const MakeDonation = () => {
     }
   }, [navigate]);
 
+  // function t send donation details to update user donations List
   const updateUserDonations = () => {
     console.log(userDonations);
     axios
       .put(`http://localhost:3001/users/updateDonations/${email}`, {
         donations: userDonations,
+      })
+      .then((response) => {
+        console.log("Donations updated successfully", response.data);
+      })
+      .catch((error) => console.log("Can't update donations list", error));
+  };
+
+  const updateTotalDonationAmount = () => {
+    axios
+      .put(`http://localhost:3001/users/updateTotalDonationAmount/${email}`, {
+        totalAmountDonated: donationAmount,
       })
       .then((response) => {
         console.log("Donations updated successfully", response.data);
@@ -90,8 +101,11 @@ const MakeDonation = () => {
   const handleMakeDonation = (e) => {
     e.preventDefault();
     setLoading(true);
-    if (donationAmount == 0) {
+    if (donationAmount === 0) {
       setMessage("All fields are equired");
+      setLoading(false);
+    } else if (donationAmount < 0) {
+      setMessage("Amount cannot be less than 0");
       setLoading(false);
     } else {
       const preAmount = donation.raised;
@@ -106,6 +120,7 @@ const MakeDonation = () => {
             userDonations.push(donation._id);
           }
           updateUserDonations();
+          updateTotalDonationAmount();
           window.location.reload();
         })
         .catch((error) => console.log("cant update", error));
@@ -165,7 +180,7 @@ const MakeDonation = () => {
         </div>
         <form onSubmit={handleMakeDonation}>
           <h1 className="text-[3rem] font-[600] text-center">
-            Make a Donation With MTN MoMo Here ...
+            Make a Donation Here
           </h1>
           <Message message={message} />
           <div className="" onSubmit={handleMakeDonation}>

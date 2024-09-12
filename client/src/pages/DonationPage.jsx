@@ -1,19 +1,20 @@
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import "../asserts/css/donations.scss";
+import { useEffect, useState } from "react";
 
 const DonationPage = ({ donations }) => {
-  const beneficiariesArray = [];
+  const [donationsItem, setDonationsItem] = useState({});
   const { id } = useParams();
-  const donationsItem = donations.find(
-    (donationsItem) => donationsItem._id.toString() === id
-  );
+  // const donationsItem = donations.find(
+  //   (donationsItem) => donationsItem._id.toString() === id
+  // );
 
-  const beneficiaries = donationsItem.beneficiaries;
-
-  for (let i = 0; i < beneficiaries.length; i++) {
-    beneficiariesArray.push(beneficiaries[i]);
-  }
+  useEffect(() => {
+    fetch(`http://localhost:3001/donations/${id}`)
+      .then((res) => res.json())
+      .then((data) => setDonationsItem(data));
+  }, [id]);
 
   return (
     <div>
@@ -92,8 +93,8 @@ const DonationPage = ({ donations }) => {
           </div>
 
           <h3 className="my-[2rem]">
-            Beneficiary(ies):{" "}
-            {/* {beneficiariesArray.map((beneficiary) => (
+            {/* Beneficiary(ies): */}
+            {/* {donationsItem.beneficiaries.map((beneficiary) => (
               <span key={Math.random() * 10}>{beneficiary}</span>
             ))} */}
           </h3>

@@ -13,6 +13,7 @@ const UserCard = ({ user }) => {
         .delete(`http://localhost:3001/users/delete/${donationId}`)
         .then(() => alert("User has been deleted"))
         .catch((error) => console.log(error));
+      window.location.reload();
     }
   };
 

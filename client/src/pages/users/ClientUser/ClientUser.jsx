@@ -19,6 +19,7 @@ const ClientUser = () => {
   const [userDonations, setUserDonations] = useState([]);
   const [allDonations, setAllDonations] = useState([]);
   const [commonDonations, setCommonDonations] = useState([]);
+  const [totalDonationsAmount, setUserTotalDonationsAmount] = useState(0);
 
   const [navStatus, setNavStatus] = useState("closed");
 
@@ -29,6 +30,7 @@ const ClientUser = () => {
       );
       const userData = await userResponse.json();
       setUserDonations(userData.donations);
+      setUserTotalDonationsAmount(userData.totalAmountDonated);
 
       const donationsResponse = await axios.get(
         "http://localhost:3001/donations/"
@@ -112,6 +114,13 @@ const ClientUser = () => {
             Update Info
           </div>
 
+          <div className="flex align-center justify-center flex-col text-white text-center mt-[5rem] text-3xl">
+            <h1>You have made an overall donation amount of</h1>
+            <span className="text-[3rem] font-bold mt-5">
+              ${totalDonationsAmount}
+            </span>
+          </div>
+
           <div
             className="btn my-5 text-center absolute bottom-0 left-0 cursor-pointer"
             onClick={handleLogout}
@@ -191,7 +200,8 @@ const ClientUser = () => {
               {commonDonations.length ? (
                 <div>
                   <h2 className="text-[2rem] font-bold mb-5">
-                    Donations You have Contributed To:
+                    Donations You have Contributed To: ({commonDonations.length}
+                    )
                   </h2>
                   <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {commonDonations.map((donation) => (

@@ -12,6 +12,8 @@ import UpdateDonation from "./pages/users/Admin/UpdateDonation";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import MakeDonation from "./pages/MakeDonation";
+import ForgotPassword from "./pages/ForgotPassword";
+import Missing from "./pages/Missing";
 
 function App() {
   const [donations, setDonations] = useState([]);
@@ -51,6 +53,8 @@ function App() {
           </Route>
           <Route path="clientuser" element={<ClientUser />} />
         </Route>
+        <Route path="forgotPassword" element={<ForgotPassword />} />
+        <Route path="*" element={<Missing />} />
       </Routes>
     </Router>
   );

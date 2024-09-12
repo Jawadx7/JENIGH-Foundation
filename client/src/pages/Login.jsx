@@ -58,6 +58,12 @@ const Login = () => {
             <div className="top-section">
               <img src={loginImg} alt="" />
             </div>
+            <Link
+              to="/"
+              className="mx-auto text-3xl text-white underline hover:text-black w-fit"
+            >
+              Back to Home
+            </Link>
           </div>
           <div id="right-container" className="py-5">
             <div className="welcome-back">
@@ -88,7 +94,7 @@ const Login = () => {
                   <Link to="/register" className="mr-5">
                     Create Account
                   </Link>
-                  <Link to="">Forgot Password</Link>
+                  <Link to="/forgotPassword">Forgot Password</Link>
                 </div>
               </form>
             </div>

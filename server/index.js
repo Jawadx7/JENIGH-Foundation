@@ -51,7 +51,7 @@ app.use((req, res, next) => {
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 10000,
   message: "Too many requests, please try again after 15 minutes",
 });
 
@@ -69,7 +69,7 @@ mongoose
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
-  res.send("Welcome to JENIGH Backend Server");
+  res.status(200).send("Welcome to JENIGH Backend Server");
 });
 
 // Routes

@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
     },
+    totalAmountDonated: {
+      type: Number,
+      default: 0,
+    },
     donations: [],
   },
   { timestamps: true }
